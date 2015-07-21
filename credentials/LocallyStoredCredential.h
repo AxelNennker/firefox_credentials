@@ -26,6 +26,7 @@ public:
 
 public:
   LocallyStoredCredential();
+  LocallyStoredCredential(nsIGlobalObject* aGlobal, const LocallyStoredCredentialData& data);
 
 protected:
   ~LocallyStoredCredential();

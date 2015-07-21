@@ -21,6 +21,21 @@ LocallyStoredCredential::~LocallyStoredCredential()
     // Add |MOZ_COUNT_DTOR(LocallyStoredCredential);| for a non-refcounted object.
 }
 
+LocallyStoredCredential::LocallyStoredCredential(nsIGlobalObject* aGlobal, const LocallyStoredCredentialData& data)
+  : Credential(aGlobal, data)
+{
+  if (data.mName.WasPassed()) {
+    mName = data.mName.Value();
+  } else {
+    // FIXME throw if not passed???
+  }
+  if (data.mIconURL.WasPassed()) {
+    mIconURL = data.mIconURL.Value();
+  } else {
+    // FIXME throw if not passed???
+  }
+}
+
 NS_IMPL_ADDREF_INHERITED(LocallyStoredCredential, Credential)
 NS_IMPL_RELEASE_INHERITED(LocallyStoredCredential, Credential)
 NS_INTERFACE_MAP_BEGIN_CYCLE_COLLECTION(LocallyStoredCredential)

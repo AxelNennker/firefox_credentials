@@ -33,10 +33,10 @@ PasswordCredential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto
   return PasswordCredentialBinding::Wrap(aCx, this, aGivenProto, aReflector);
 }
 
-PasswordCredential::PasswordCredential(nsIGlobalObject* aGlobal,
-    const PasswordCredentialData& data)
+PasswordCredential::PasswordCredential(nsIGlobalObject* aGlobal, const PasswordCredentialData& data)
+  : LocallyStoredCredential(aGlobal, data)
 {
-  mGlobal = aGlobal;
+  mType.AssignLiteral("password");
   if (data.mPassword.WasPassed()) {
     mPassword = data.mPassword.Value();
   } else {

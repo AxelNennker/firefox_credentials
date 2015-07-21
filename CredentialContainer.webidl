@@ -1,7 +1,19 @@
 dictionary CredentialData {
   DOMString id;
+};
+
+dictionary LocallyStoredCredentialData : CredentialData {
   DOMString name;
   USVString iconURL;
+};
+
+dictionary PasswordCredentialData : LocallyStoredCredentialData {
+  DOMString password;
+};
+
+dictionary FederatedCredentialData : LocallyStoredCredentialData {
+  USVString provider;
+  DOMString protocol;
 };
 
 interface Credential {
@@ -15,18 +27,9 @@ interface LocallyStoredCredential : Credential {
   readonly attribute USVString iconURL;
 };
 
-dictionary PasswordCredentialData : CredentialData {
-  DOMString password;
-};
-
 [Constructor(PasswordCredentialData data), Exposed=Window]
 interface PasswordCredential : LocallyStoredCredential {
   Promise<Response> send(USVString url);
-};
-
-dictionary FederatedCredentialData : CredentialData {
-  USVString provider;
-  DOMString? protocol;
 };
 
 [Constructor(FederatedCredentialData data), Exposed=Window]

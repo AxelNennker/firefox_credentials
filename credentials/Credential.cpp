@@ -39,8 +39,7 @@ Credential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::Mu
 }
 #endif
 
-Credential::Credential(nsIGlobalObject* aGlobal,
-    const CredentialData& data)
+Credential::Credential(nsIGlobalObject* aGlobal, const CredentialData& data)
 {
   mGlobal = aGlobal;
   if (data.mId.WasPassed()) {
