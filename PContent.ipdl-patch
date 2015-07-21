@@ -1,0 +1,26 @@
+diff -r 56e207dbb3bd dom/ipc/PContent.ipdl
+--- a/dom/ipc/PContent.ipdl	Fri Jun 26 13:19:12 2015 +0200
++++ b/dom/ipc/PContent.ipdl	Mon Jul 20 11:28:49 2015 +0200
+@@ -646,16 +646,22 @@
+     async UpdateWindow(uintptr_t aChildId);
+ 
+     /**
+      * Send gamepad status update to child.
+      */
+     GamepadUpdate(GamepadChangeEvent aGamepadEvent);
+ parent:
+     /**
++     *
++     */
++    sync FindLogins(nsString prepath)
++        returns (nsString username, nsString password);
++
++    /**
+      * Tell the content process some attributes of itself.  This is
+      * among the first information queried by content processes after
+      * startup.  (The message is sync to allow the content process to
+      * control when it receives the information.)
+      *
+      * |id| is a unique ID among all subprocesses.  When |isForApp &&
+      * isForBrowser|, we're loading <browser> for an app.  When
+      * |isForBrowser|, we're loading <browser>.  When |!isForApp &&

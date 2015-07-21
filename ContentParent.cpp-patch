@@ -1,0 +1,49 @@
+diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
+--- a/dom/ipc/ContentParent.cpp
++++ b/dom/ipc/ContentParent.cpp
+@@ -5122,16 +5122,45 @@ ContentParent::RecvProfile(const nsCStri
+     }
+     mProfile = aProfile;
+     mGatherer->GatheredOOPProfile();
+     mGatherer = nullptr;
+ #endif
+     return true;
+ }
+ 
++bool
++ContentParent::RecvFindLogins(
++            const nsString& prepath,
++            nsString* aUsername,
++            nsString* aPassword)
++{
++  nsCOMPtr<nsILoginManager> loginmanager = do_GetService("@mozilla.org/login-manager;1");
++  /*
++  nsILoginInfo** loginInfos;
++  nsAString httpRealm(prepath);
++  nsAString actionUrl("");
++  unsigned int count;
++  //const nsAString& hostname("{}");
++  loginmanager->FindLogins(&count, "{}", actionUrl, httpRealm, &loginInfos);
++  nsILoginInfo* loginInfo = loginInfos[0];
++  if (loginInfo) {
++    nsAString password;
++    nsAString username;
++    loginInfo->GetUsername(username);
++    loginInfo->GetPassword(password);
++    *aUsername.Assign(username);
++    *aPassword.Assign(password);
++  }
++  */
++  *aUsername = NS_LITERAL_STRING("username");
++  *aPassword = NS_LITERAL_STRING("password");
++  return true;
++}
++
+ } // namespace dom
+ } // namespace mozilla
+ 
+ NS_IMPL_ISUPPORTS(ParentIdleListener, nsIObserver)
+ 
+ NS_IMETHODIMP
+ ParentIdleListener::Observe(nsISupports*, const char* aTopic, const char16_t* aData) {
+     mozilla::unused << mParent->SendNotifyIdleObserver(mObserver,

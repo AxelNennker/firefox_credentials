@@ -1,0 +1,97 @@
+diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
+--- a/dom/bindings/Bindings.conf
++++ b/dom/bindings/Bindings.conf
+@@ -298,16 +298,26 @@ DOMInterfaces = {
+ 'ConvolverNode': {
+     'implicitJSContext': [ 'buffer' ],
+ },
+ 
+ 'Coordinates': {
+     'headerFile': 'nsGeoPosition.h'
+ },
+ 
++'Credential' : {
++    'wrapperCache': False,
++    'workers': False,
++    'concrete': False
++},
++
++'CredentialContainer' : {
++    'workers': False,
++},
++
+ 'Crypto' : {
+     'headerFile': 'Crypto.h'
+ },
+ 
+ 'CSS': {
+     'concrete': False,
+ },
+ 
+@@ -468,16 +478,21 @@ DOMInterfaces = {
+     },
+ },
+ 
+ 'ExtendableEvent': {
+     'headerFile': 'mozilla/dom/ServiceWorkerEvents.h',
+     'nativeType': 'mozilla::dom::workers::ExtendableEvent',
+ },
+ 
++'FederatedCredential' : {
++    'workers': False,
++    'wrapperCache': False,
++},
++
+ 'FetchEvent': {
+     'headerFile': 'ServiceWorkerEvents.h',
+     'nativeType': 'mozilla::dom::workers::FetchEvent',
+     'binaryNames': {
+         'request': 'request_'
+     },
+ },
+ 
+@@ -680,16 +695,22 @@ DOMInterfaces = {
+     'nativeType': 'nsIInputStream',
+     'notflattened': True
+ },
+ 
+ 'KeyEvent': {
+     'concrete': False
+ },
+ 
++'LocallyStoredCredential' : {
++    'workers': False,
++    'wrapperCache': False,
++    'concrete': False
++},
++
+ 'LocalMediaStream': {
+     'headerFile': 'DOMMediaStream.h',
+     'nativeType': 'mozilla::DOMLocalMediaStream'
+ },
+ 
+ 'Location': {
+     'nativeType': 'nsLocation',
+ },
+@@ -884,16 +905,21 @@ DOMInterfaces = {
+ 'OfflineResourceList': {
+     'nativeType': 'nsDOMOfflineResourceList',
+ },
+ 
+ 'PaintRequestList': {
+     'headerFile': 'mozilla/dom/PaintRequest.h',
+ },
+ 
++'PasswordCredential' : {
++    'wrapperCache': False,
++    'workers': False
++},
++
+ 'Path2D': {
+     'nativeType': 'mozilla::dom::CanvasPath',
+     'headerFile': 'CanvasPath.h'
+ },
+ 
+ 'PeerConnectionImpl': {
+     'nativeType': 'mozilla::PeerConnectionImpl',
+     'headerFile': 'PeerConnectionImpl.h',

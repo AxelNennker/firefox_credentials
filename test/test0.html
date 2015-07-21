@@ -1,0 +1,17 @@
+<html><body>
+<script>
+try {
+  var passwordCredentialData = {
+      "id": "id",
+      "name": "name",
+      "password": "secret",
+      "iconURL": "iconURL"
+  };
+  var passwordCredential = new PasswordCredential(passwordCredentialData);
+
+  console.log("passwordCredential=" + passwordCredential);
+  } catch(e) {
+  console.error("exception: ", e);
+  }
+</script>
+</body></html>

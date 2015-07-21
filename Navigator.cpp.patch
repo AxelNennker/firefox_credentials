@@ -1,0 +1,49 @@
+diff --git a/dom/base/Navigator.cpp b/dom/base/Navigator.cpp
+--- a/dom/base/Navigator.cpp
++++ b/dom/base/Navigator.cpp
+@@ -27,16 +27,17 @@
+ #include "nsICookiePermission.h"
+ #include "nsIScriptSecurityManager.h"
+ #include "nsCharSeparatedTokenizer.h"
+ #include "nsContentUtils.h"
+ #include "nsUnicharUtils.h"
+ #include "mozilla/Preferences.h"
+ #include "mozilla/Telemetry.h"
+ #include "BatteryManager.h"
++#include "mozilla/dom/CredentialContainer.h"
+ #include "mozilla/dom/DeviceStorageAreaListener.h"
+ #include "mozilla/dom/PowerManager.h"
+ #include "mozilla/dom/WakeLock.h"
+ #include "mozilla/dom/power/PowerManagerService.h"
+ #include "mozilla/dom/CellBroadcast.h"
+ #include "mozilla/dom/IccManager.h"
+ #include "mozilla/dom/InputPortManager.h"
+ #include "mozilla/dom/MobileMessageManager.h"
+@@ -992,16 +993,27 @@ Navigator::GetDeviceStorageByNameAndType
+   if (!storage) {
+     return nullptr;
+   }
+ 
+   mDeviceStorageStores.AppendElement(storage);
+   return storage;
+ }
+ 
++CredentialContainer*
++Navigator::Credentials()
++{
++  if (mCredentialContainer) {
++    return mCredentialContainer;
++  }
++
++  mCredentialContainer = new CredentialContainer(mWindow);
++  return mCredentialContainer;
++}
++
+ Geolocation*
+ Navigator::GetGeolocation(ErrorResult& aRv)
+ {
+   if (mGeolocation) {
+     return mGeolocation;
+   }
+ 
+   if (!mWindow || !mWindow->GetOuterWindow() || !mWindow->GetDocShell()) {

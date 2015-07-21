@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+</head><body>
+<h1 id="h1">nix</h1>
+<script>
+  try {
+    var text = "NIX";
+    if (navigator.credentials) {
+      console.log("have navigator.credentials");
+      text = "have navigator.credentials";
+      navigator.credentials.get().then(function(credential) {
+            console.log("credential: "+ JSON.stringify(credential));
+            console.log("credential.id: "+ credential.id);
+            console.log("credential.iconURL: "+ credential.iconURL);
+            console.log("credential.name: "+ credential.name);
+            console.log("credential.password: "+ credential.password);
+      });
+    } else {
+      console.log("don't have navigator.credentials");
+      text = "don't have navigator.credentials";
+    }
+    var elt=document.getElementById("h1");
+    elt.textContent = text;
+  } catch(e) {
+  console.error("exception: ", e);
+  }
+</script>
+</body></html>

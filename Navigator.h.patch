@@ -1,0 +1,57 @@
+diff --git a/dom/base/Navigator.h b/dom/base/Navigator.h
+--- a/dom/base/Navigator.h
++++ b/dom/base/Navigator.h
+@@ -29,16 +29,17 @@ class nsIDOMNavigatorSystemMessages;
+ class nsDOMCameraManager;
+ class nsDOMDeviceStorage;
+ class nsIPrincipal;
+ class nsIURI;
+ 
+ namespace mozilla {
+ namespace dom {
+ class Geolocation;
++class CredentialContainer;
+ class systemMessageCallback;
+ class MediaDevices;
+ struct MediaStreamConstraints;
+ class WakeLock;
+ class ArrayBufferViewOrBlobOrStringOrFormData;
+ struct MobileIdOptions;
+ class ServiceWorkerContainer;
+ } // namespace dom
+@@ -150,16 +151,17 @@ public:
+   void RegisterProtocolHandler(const nsAString& aScheme, const nsAString& aURL,
+                                const nsAString& aTitle, ErrorResult& aRv);
+   void RegisterContentHandler(const nsAString& aMIMEType, const nsAString& aURL,
+                               const nsAString& aTitle, ErrorResult& aRv);
+   nsMimeTypeArray* GetMimeTypes(ErrorResult& aRv);
+   nsPluginArray* GetPlugins(ErrorResult& aRv);
+   // The XPCOM GetDoNotTrack is ok
+   Geolocation* GetGeolocation(ErrorResult& aRv);
++  CredentialContainer* Credentials();
+   battery::BatteryManager* GetBattery(ErrorResult& aRv);
+ 
+   static already_AddRefed<Promise> GetDataStores(nsPIDOMWindow* aWindow,
+                                                  const nsAString& aName,
+                                                  const nsAString& aOwner,
+                                                  ErrorResult& aRv);
+ 
+   static void AppName(nsAString& aAppName, bool aUsePrefOverriddenValue);
+@@ -349,16 +351,17 @@ private:
+   virtual ~Navigator();
+ 
+   bool CheckPermission(const char* type);
+   static bool CheckPermission(nsPIDOMWindow* aWindow, const char* aType);
+ 
+   nsRefPtr<nsMimeTypeArray> mMimeTypes;
+   nsRefPtr<nsPluginArray> mPlugins;
+   nsRefPtr<Geolocation> mGeolocation;
++  nsRefPtr<CredentialContainer> mCredentialContainer;
+   nsRefPtr<DesktopNotificationCenter> mNotification;
+   nsRefPtr<battery::BatteryManager> mBatteryManager;
+ #ifdef MOZ_B2G_FM
+   nsRefPtr<FMRadio> mFMRadio;
+ #endif
+   nsRefPtr<PowerManager> mPowerManager;
+   nsRefPtr<CellBroadcast> mCellBroadcast;
+   nsRefPtr<IccManager> mIccManager;
