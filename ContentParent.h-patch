@@ -1,14 +1,14 @@
-diff -r 56e207dbb3bd dom/ipc/ContentParent.h
---- a/dom/ipc/ContentParent.h	Fri Jun 26 13:19:12 2015 +0200
-+++ b/dom/ipc/ContentParent.h	Mon Jul 20 11:29:28 2015 +0200
-@@ -378,16 +378,22 @@
-     AllocPContentPermissionRequestParent(const InfallibleTArray<PermissionRequest>& aRequests,
-                                          const IPC::Principal& aPrincipal,
-                                          const TabId& aTabId) override;
+diff --git a/dom/ipc/ContentParent.h b/dom/ipc/ContentParent.h
+--- a/dom/ipc/ContentParent.h
++++ b/dom/ipc/ContentParent.h
+@@ -383,16 +383,22 @@ public:
      virtual bool
      DeallocPContentPermissionRequestParent(PContentPermissionRequestParent* actor) override;
  
      bool HasGamepadListener() const { return mHasGamepadListener; }
+ 
+     void SetNuwaParent(NuwaParent* aNuwaParent) { mNuwaParent = aNuwaParent; }
+     void ForkNewProcess(bool aBlocking);
  
 +    virtual bool
 +    RecvFindLogins(

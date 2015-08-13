@@ -43,8 +43,6 @@ protected:
   ~PasswordCredential();
   nsString mPassword;
 public:
-  bool WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector);
-
   static already_AddRefed<PasswordCredential> Constructor(const GlobalObject& global, const PasswordCredentialData& data, ErrorResult& aRv);
 
   void GetPassword(nsString& aRetVal) const { aRetVal = mPassword; }

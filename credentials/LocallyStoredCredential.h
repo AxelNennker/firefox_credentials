@@ -10,7 +10,6 @@
 #include "mozilla/Attributes.h"
 #include "mozilla/ErrorResult.h"
 #include "nsCycleCollectionParticipant.h"
-#include "nsWrapperCache.h"
 
 #include "mozilla/dom/Credential.h"
 
@@ -34,8 +33,6 @@ protected:
   nsString mIconURL;
 
 public:
-/*  bool WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector);*/
-
   void GetName(nsString& aRetVal) const { aRetVal = mName; }
 
   void GetIconURL(nsString& aRetVal) const { aRetVal = mIconURL; }

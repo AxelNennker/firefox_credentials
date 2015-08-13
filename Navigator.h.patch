@@ -19,13 +19,13 @@ diff --git a/dom/base/Navigator.h b/dom/base/Navigator.h
  struct MobileIdOptions;
  class ServiceWorkerContainer;
  } // namespace dom
-@@ -150,16 +151,17 @@ public:
-   void RegisterProtocolHandler(const nsAString& aScheme, const nsAString& aURL,
+@@ -154,16 +155,17 @@ public:
                                 const nsAString& aTitle, ErrorResult& aRv);
    void RegisterContentHandler(const nsAString& aMIMEType, const nsAString& aURL,
                                const nsAString& aTitle, ErrorResult& aRv);
    nsMimeTypeArray* GetMimeTypes(ErrorResult& aRv);
    nsPluginArray* GetPlugins(ErrorResult& aRv);
+   Permissions* GetPermissions(ErrorResult& aRv);
    // The XPCOM GetDoNotTrack is ok
    Geolocation* GetGeolocation(ErrorResult& aRv);
 +  CredentialContainer* Credentials();
@@ -37,14 +37,14 @@ diff --git a/dom/base/Navigator.h b/dom/base/Navigator.h
                                                   ErrorResult& aRv);
  
    static void AppName(nsAString& aAppName, bool aUsePrefOverriddenValue);
-@@ -349,16 +351,17 @@ private:
-   virtual ~Navigator();
+@@ -356,16 +358,17 @@ private:
  
    bool CheckPermission(const char* type);
    static bool CheckPermission(nsPIDOMWindow* aWindow, const char* aType);
  
    nsRefPtr<nsMimeTypeArray> mMimeTypes;
    nsRefPtr<nsPluginArray> mPlugins;
+   nsRefPtr<Permissions> mPermissions;
    nsRefPtr<Geolocation> mGeolocation;
 +  nsRefPtr<CredentialContainer> mCredentialContainer;
    nsRefPtr<DesktopNotificationCenter> mNotification;

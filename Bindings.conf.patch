@@ -1,7 +1,7 @@
 diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
 --- a/dom/bindings/Bindings.conf
 +++ b/dom/bindings/Bindings.conf
-@@ -298,16 +298,26 @@ DOMInterfaces = {
+@@ -298,16 +298,25 @@ DOMInterfaces = {
  'ConvolverNode': {
      'implicitJSContext': [ 'buffer' ],
  },
@@ -11,7 +11,6 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
  },
  
 +'Credential' : {
-+    'wrapperCache': False,
 +    'workers': False,
 +    'concrete': False
 +},
@@ -28,7 +27,7 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
      'concrete': False,
  },
  
-@@ -468,16 +478,21 @@ DOMInterfaces = {
+@@ -468,16 +477,20 @@ DOMInterfaces = {
      },
  },
  
@@ -39,7 +38,6 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
  
 +'FederatedCredential' : {
 +    'workers': False,
-+    'wrapperCache': False,
 +},
 +
  'FetchEvent': {
@@ -50,7 +48,7 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
      },
  },
  
-@@ -680,16 +695,22 @@ DOMInterfaces = {
+@@ -680,16 +693,21 @@ DOMInterfaces = {
      'nativeType': 'nsIInputStream',
      'notflattened': True
  },
@@ -61,7 +59,6 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
  
 +'LocallyStoredCredential' : {
 +    'workers': False,
-+    'wrapperCache': False,
 +    'concrete': False
 +},
 +
@@ -73,7 +70,7 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
  'Location': {
      'nativeType': 'nsLocation',
  },
-@@ -884,16 +905,21 @@ DOMInterfaces = {
+@@ -884,16 +902,20 @@ DOMInterfaces = {
  'OfflineResourceList': {
      'nativeType': 'nsDOMOfflineResourceList',
  },
@@ -83,7 +80,6 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
  },
  
 +'PasswordCredential' : {
-+    'wrapperCache': False,
 +    'workers': False
 +},
 +

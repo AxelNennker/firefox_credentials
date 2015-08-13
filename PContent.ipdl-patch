@@ -1,21 +1,19 @@
-diff -r 56e207dbb3bd dom/ipc/PContent.ipdl
---- a/dom/ipc/PContent.ipdl	Fri Jun 26 13:19:12 2015 +0200
-+++ b/dom/ipc/PContent.ipdl	Mon Jul 20 11:28:49 2015 +0200
-@@ -646,16 +646,22 @@
-     async UpdateWindow(uintptr_t aChildId);
+diff --git a/dom/ipc/PContent.ipdl b/dom/ipc/PContent.ipdl
+--- a/dom/ipc/PContent.ipdl
++++ b/dom/ipc/PContent.ipdl
+@@ -659,16 +659,19 @@ child:
  
      /**
-      * Send gamepad status update to child.
+      * Notify the child that presentation receiver has been launched with the
+      * correspondent iframe.
       */
-     GamepadUpdate(GamepadChangeEvent aGamepadEvent);
+     async NotifyPresentationReceiverLaunched(PBrowser aIframe, nsString aSessionId);
+ 
  parent:
-     /**
-+     *
-+     */
 +    sync FindLogins(nsString prepath)
 +        returns (nsString username, nsString password);
 +
-+    /**
+     /**
       * Tell the content process some attributes of itself.  This is
       * among the first information queried by content processes after
       * startup.  (The message is sync to allow the content process to
@@ -23,4 +21,3 @@ diff -r 56e207dbb3bd dom/ipc/PContent.ipdl
       *
       * |id| is a unique ID among all subprocesses.  When |isForApp &&
       * isForBrowser|, we're loading <browser> for an app.  When
-      * |isForBrowser|, we're loading <browser>.  When |!isForApp &&

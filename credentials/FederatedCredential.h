@@ -10,7 +10,6 @@
 #include "mozilla/Attributes.h"
 #include "mozilla/ErrorResult.h"
 #include "nsCycleCollectionParticipant.h"
-#include "nsWrapperCache.h"
 
 #include "mozilla/dom/LocallyStoredCredential.h"
 
@@ -34,8 +33,6 @@ protected:
   nsString mProtocol;
 
 public:
-  bool WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector);
-
   static already_AddRefed<FederatedCredential> Constructor(const GlobalObject& global, const FederatedCredentialData& data, ErrorResult& aRv);
 
   void GetProvider(nsString& aRetVal) const { aRetVal = mProvider; }

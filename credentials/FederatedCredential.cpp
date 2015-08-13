@@ -37,6 +37,7 @@ FederatedCredential::FederatedCredential(nsIGlobalObject* aGlobal,
   if (data.mIconURL.WasPassed()) {
     mIconURL = data.mIconURL.Value();
   }
+  mType.AssignLiteral("federated");
   /*
   if (data.mId.WasPassed()) {
     mId = data.mId.Value();
@@ -71,12 +72,6 @@ FederatedCredential::Constructor(const GlobalObject& aGlobal,
   }*/
   nsRefPtr<FederatedCredential> ret = new FederatedCredential(global, data);
   return ret.forget();
-}
-
-bool
-FederatedCredential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector)
-{
-  return FederatedCredentialBinding::Wrap(aCx, this, aGivenProto, aReflector);
 }
 
 } // namespace dom

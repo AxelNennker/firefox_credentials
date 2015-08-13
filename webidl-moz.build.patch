@@ -11,6 +11,7 @@ diff --git a/dom/webidl/moz.build b/dom/webidl/moz.build
      'ConvolverNode.webidl',
      'Coordinates.webidl',
 +    'CredentialContainer.webidl',
+     'CreateOfferRequest.webidl',
      'Crypto.webidl',
      'CSPDictionaries.webidl',
      'CSPReport.webidl',
@@ -18,4 +19,3 @@ diff --git a/dom/webidl/moz.build b/dom/webidl/moz.build
      'CSSAnimation.webidl',
      'CSSLexer.webidl',
      'CSSPrimitiveValue.webidl',
-     'CSSRuleList.webidl',

@@ -31,14 +31,6 @@ Credential::~Credential()
 {
 }
 
-#if 0
-bool
-Credential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector)
-{
-  return CredentialBinding::Wrap(aCx, this, aGivenProto, aReflector);
-}
-#endif
-
 Credential::Credential(nsIGlobalObject* aGlobal, const CredentialData& data)
 {
   mGlobal = aGlobal;
@@ -49,7 +41,39 @@ Credential::Credential(nsIGlobalObject* aGlobal, const CredentialData& data)
   }
 }
 
-bool isInherentlyInsecure(nsIDOMLocation* aLocation)
+#if 0
+bool
+Credential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector)
+{
+  if (mType.EqualsASCII("federated")) {
+    return FederatedCredentialBinding::Wrap(aCx, this, aGivenProto, aReflector);
+  } else {
+    if (mType.EqualsASCII("password")) {
+        return PasswordCredentialBinding::Wrap(aCx, this, aGivenProto, aReflector);
+    } else {
+      // FIXME throw?
+      return false;
+    }
+  }
+}
+#else
+JSObject*
+Credential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto)
+{
+  if (mType.EqualsASCII("federated")) {
+    return FederatedCredentialBinding::Wrap(aCx, this, aGivenProto);
+  } else {
+    if (mType.EqualsASCII("password")) {
+        return PasswordCredentialBinding::Wrap(aCx, this, aGivenProto);
+    } else {
+      // FIXME throw?
+      return NULL;
+    }
+  }
+}
+#endif
+
+static bool isInherentlyInsecure(nsIDOMLocation* aLocation)
 {
   DOMString protocol;
   nsresult rv =  aLocation->GetProtocol(protocol);
@@ -58,7 +82,7 @@ bool isInherentlyInsecure(nsIDOMLocation* aLocation)
   return pString.EqualsLiteral("http");
 }
 
-bool isInherentlyInsecure(nsCOMPtr<nsIURI> aUri)
+static bool isInherentlyInsecure(nsCOMPtr<nsIURI> aUri)
 {
   nsAutoCString schemeStr;
   nsresult rv =  aUri->GetScheme(schemeStr);
@@ -85,7 +109,7 @@ Credential::Constructor(const GlobalObject& aGlobal,
   return ret.forget();
 }
 
-bool originMismatch(nsCOMPtr<nsIURI> uri) {
+static bool originMismatch(nsCOMPtr<nsIURI> uri) {
   // FIXME
   return false;
 }

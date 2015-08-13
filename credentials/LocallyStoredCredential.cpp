@@ -40,13 +40,6 @@ NS_IMPL_ADDREF_INHERITED(LocallyStoredCredential, Credential)
 NS_IMPL_RELEASE_INHERITED(LocallyStoredCredential, Credential)
 NS_INTERFACE_MAP_BEGIN_CYCLE_COLLECTION(LocallyStoredCredential)
 NS_INTERFACE_MAP_END_INHERITING(Credential)
-/*
-bool
-LocallyStoredCredential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector)
-{
-  return LocallyStoredCredentialBinding::Wrap(aCx, this, aGivenProto, aReflector);
-}
-*/
 
 } // namespace dom
 } // namespace mozilla

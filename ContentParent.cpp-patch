@@ -1,13 +1,32 @@
 diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 --- a/dom/ipc/ContentParent.cpp
 +++ b/dom/ipc/ContentParent.cpp
-@@ -5122,16 +5122,45 @@ ContentParent::RecvProfile(const nsCStri
-     }
-     mProfile = aProfile;
-     mGatherer->GatheredOOPProfile();
-     mGatherer = nullptr;
+@@ -162,16 +162,18 @@
+ #include "prio.h"
+ #include "private/pprio.h"
+ #include "ContentProcessManager.h"
+ #include "mozilla/psm/PSMContentListener.h"
+ #include "nsPluginHost.h"
+ #include "nsPluginTags.h"
+ #include "nsIBlocklistService.h"
+ 
++#include "nsILoginManager.h"
++
+ #include "nsIBidiKeyboard.h"
+ 
+ #ifdef MOZ_WEBRTC
+ #include "signaling/src/peerconnection/WebrtcGlobalParent.h"
  #endif
-     return true;
+ 
+ #if defined(ANDROID) || defined(LINUX)
+ #include "nsSystemInfo.h"
+@@ -5213,16 +5215,45 @@ ContentParent::RecvBeginDriverCrashGuard
+ 
+ bool
+ ContentParent::RecvEndDriverCrashGuard(const uint32_t& aGuardType)
+ {
+   mDriverCrashGuard = nullptr;
+   return true;
  }
  
 +bool

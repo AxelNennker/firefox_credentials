@@ -27,12 +27,6 @@ PasswordCredential::~PasswordCredential()
 {
 }
 
-bool
-PasswordCredential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector)
-{
-  return PasswordCredentialBinding::Wrap(aCx, this, aGivenProto, aReflector);
-}
-
 PasswordCredential::PasswordCredential(nsIGlobalObject* aGlobal, const PasswordCredentialData& data)
   : LocallyStoredCredential(aGlobal, data)
 {
@@ -75,7 +69,7 @@ PasswordCredential::Constructor(const GlobalObject& aGlobal,
   nsIDOMLocation* location;
   nsresult rv =  window->GetLocation(&location);
   NS_ENSURE_SUCCESS(rv, nullptr);
-  if (isInherentlyInsecure(location)) {
+  if (Credential::isInherentlyInsecure(location)) {
     NS_WARNING("Do not use PasswordCredential on inherently insecure pages");
   }
   nsRefPtr<PasswordCredential> ret = new PasswordCredential(global, data);
