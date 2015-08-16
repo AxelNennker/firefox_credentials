@@ -1,5 +1,7 @@
 #include "PasswordCredential.h"
 
+#include "nsWrapperCache.h"
+
 #include "mozilla/dom/CredentialContainerBinding.h"
 #include "mozilla/dom/FetchBinding.h"
 #include "mozilla/dom/RequestBinding.h"
@@ -38,6 +40,20 @@ PasswordCredential::PasswordCredential(nsIGlobalObject* aGlobal, const PasswordC
   }
 }
 
+#if 0
+bool
+PasswordCredential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector)
+{
+  return PasswordCredentialBinding::Wrap(aCx, this, aGivenProto, aReflector);
+}
+#else
+JSObject*
+PasswordCredential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto)
+{
+  return PasswordCredentialBinding::Wrap(aCx, this, aGivenProto);
+}
+#endif
+
 /*
 bool isInherentlyInsecure(nsIDOMLocation* aLocation)
 {
@@ -69,7 +85,7 @@ PasswordCredential::Constructor(const GlobalObject& aGlobal,
   nsIDOMLocation* location;
   nsresult rv =  window->GetLocation(&location);
   NS_ENSURE_SUCCESS(rv, nullptr);
-  if (Credential::isInherentlyInsecure(location)) {
+  if (isInherentlyInsecure(location)) {
     NS_WARNING("Do not use PasswordCredential on inherently insecure pages");
   }
   nsRefPtr<PasswordCredential> ret = new PasswordCredential(global, data);

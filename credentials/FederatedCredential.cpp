@@ -4,9 +4,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#include "mozilla/dom/CredentialContainerBinding.h"
 #include "mozilla/dom/FederatedCredential.h"
+
+#include "mozilla/dom/CredentialContainerBinding.h"
 #include "mozilla/dom/LocallyStoredCredential.h"
+
+#include "nsWrapperCache.h"
 
 namespace mozilla {
 namespace dom {
@@ -16,6 +19,20 @@ NS_IMPL_ADDREF_INHERITED(FederatedCredential, LocallyStoredCredential)
 NS_IMPL_RELEASE_INHERITED(FederatedCredential, LocallyStoredCredential)
 NS_INTERFACE_MAP_BEGIN_CYCLE_COLLECTION(FederatedCredential)
 NS_INTERFACE_MAP_END_INHERITING(LocallyStoredCredential)
+
+#if 0
+bool
+FederatedCredential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector)
+{
+  return FederatedCredentialBinding::Wrap(aCx, this, aGivenProto, aReflector);
+} 
+#else
+JSObject*
+FederatedCredential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto)
+{
+  return FederatedCredentialBinding::Wrap(aCx, this, aGivenProto);
+}
+#endif
 
 FederatedCredential::FederatedCredential()
 {

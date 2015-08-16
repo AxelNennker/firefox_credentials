@@ -10,8 +10,6 @@
 #include "nsIGlobalObject.h"
 #include "mozilla/dom/Promise.h"
 
-#include "nsWrapperCache.h"
-
 namespace mozilla {
 class ErrorResult;
 namespace dom {
@@ -33,7 +31,6 @@ namespace mozilla {
 namespace dom {
 
 class Credential : public nsISupports /* or NonRefcountedDOMObject if this is a non-refcounted object */
-  , public nsWrapperCache
 {
 public:
   NS_DECL_CYCLE_COLLECTING_ISUPPORTS
@@ -50,11 +47,6 @@ protected:
   nsString mType;
 public:
   nsIGlobalObject* GetParentObject() const { return mGlobal; }
-#if 0
-  virtual bool WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector) override;
-#else
-  virtual JSObject* WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto);
-#endif
 
   static already_AddRefed<Credential> Constructor(const GlobalObject& global, const CredentialData& data, ErrorResult& aRv);
 

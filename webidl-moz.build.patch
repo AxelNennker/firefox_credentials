@@ -1,8 +1,7 @@
 diff --git a/dom/webidl/moz.build b/dom/webidl/moz.build
 --- a/dom/webidl/moz.build
 +++ b/dom/webidl/moz.build
-@@ -83,16 +83,17 @@ WEBIDL_FILES = [
-     'Comment.webidl',
+@@ -84,16 +84,17 @@ WEBIDL_FILES = [
      'CompositionEvent.webidl',
      'Console.webidl',
      'Constraints.webidl',
@@ -10,8 +9,8 @@ diff --git a/dom/webidl/moz.build b/dom/webidl/moz.build
      'ContainerBoxObject.webidl',
      'ConvolverNode.webidl',
      'Coordinates.webidl',
-+    'CredentialContainer.webidl',
      'CreateOfferRequest.webidl',
++    'CredentialContainer.webidl',
      'Crypto.webidl',
      'CSPDictionaries.webidl',
      'CSPReport.webidl',
@@ -19,3 +18,4 @@ diff --git a/dom/webidl/moz.build b/dom/webidl/moz.build
      'CSSAnimation.webidl',
      'CSSLexer.webidl',
      'CSSPrimitiveValue.webidl',
+     'CSSRuleList.webidl',

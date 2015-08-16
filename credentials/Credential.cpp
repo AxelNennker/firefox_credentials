@@ -41,38 +41,6 @@ Credential::Credential(nsIGlobalObject* aGlobal, const CredentialData& data)
   }
 }
 
-#if 0
-bool
-Credential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector)
-{
-  if (mType.EqualsASCII("federated")) {
-    return FederatedCredentialBinding::Wrap(aCx, this, aGivenProto, aReflector);
-  } else {
-    if (mType.EqualsASCII("password")) {
-        return PasswordCredentialBinding::Wrap(aCx, this, aGivenProto, aReflector);
-    } else {
-      // FIXME throw?
-      return false;
-    }
-  }
-}
-#else
-JSObject*
-Credential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto)
-{
-  if (mType.EqualsASCII("federated")) {
-    return FederatedCredentialBinding::Wrap(aCx, this, aGivenProto);
-  } else {
-    if (mType.EqualsASCII("password")) {
-        return PasswordCredentialBinding::Wrap(aCx, this, aGivenProto);
-    } else {
-      // FIXME throw?
-      return NULL;
-    }
-  }
-}
-#endif
-
 static bool isInherentlyInsecure(nsIDOMLocation* aLocation)
 {
   DOMString protocol;
