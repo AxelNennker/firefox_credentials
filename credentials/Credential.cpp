@@ -13,13 +13,12 @@
 namespace mozilla {
 namespace dom {
 
-// Only needed for refcounted objects.
-// NS_IMPL_CYCLE_COLLECTION_WRAPPERCACHE_0(Credential)
-NS_IMPL_CYCLE_COLLECTION(Credential, mGlobal)
+NS_IMPL_CYCLE_COLLECTION_WRAPPERCACHE(Credential, mGlobal)
 NS_IMPL_CYCLE_COLLECTING_ADDREF(Credential)
 NS_IMPL_CYCLE_COLLECTING_RELEASE(Credential)
 NS_INTERFACE_MAP_BEGIN_CYCLE_COLLECTION(Credential)
-  //NS_WRAPPERCACHE_INTERFACE_MAP_ENTRY
+  NS_WRAPPERCACHE_INTERFACE_MAP_ENTRY
+  NS_INTERFACE_MAP_ENTRY(Credential)
   NS_INTERFACE_MAP_ENTRY(nsISupports)
 NS_INTERFACE_MAP_END
 
@@ -29,6 +28,12 @@ Credential::Credential()
 
 Credential::~Credential()
 {
+}
+
+JSObject* 
+Credential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto)
+{
+  return CredentialBinding::Wrap(aCx, this, aGivenProto);
 }
 
 Credential::Credential(nsIGlobalObject* aGlobal, const CredentialData& data)

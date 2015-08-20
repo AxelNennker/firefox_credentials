@@ -32,7 +32,6 @@ namespace mozilla {
 namespace dom {
 
 class PasswordCredential final : public LocallyStoredCredential
-                               , public nsWrapperCache
 {
 public:
   NS_DECL_ISUPPORTS_INHERITED
@@ -47,7 +46,7 @@ public:
 #if 0
     virtual bool WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector) override;
 #else
-      virtual JSObject* WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto);
+  virtual JSObject* WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto) override;
 #endif
 
   static already_AddRefed<PasswordCredential> Constructor(const GlobalObject& global, const PasswordCredentialData& data, ErrorResult& aRv);

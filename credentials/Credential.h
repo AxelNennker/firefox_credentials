@@ -5,10 +5,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef mozilla_dom_Credential_h
+#define mozilla_dom_Credential_h
+
+#include "js/TypeDecls.h"
+#include "mozilla/Attributes.h"
+#include "mozilla/ErrorResult.h"
+#include "mozilla/dom/BindingDeclarations.h"
+#include "nsCycleCollectionParticipant.h"
+#include "nsWrapperCache.h"
 
 #include "nsCOMPtr.h"
 #include "nsIGlobalObject.h"
 #include "mozilla/dom/Promise.h"
+
+#define CREDENTIAL_IID \
+{ 0xec9fef4b, 0x8c3b, 0x9fd7, \
+ { 0xec, 0x03, 0xd4, 0xc2, 0x59, 0xa1, 0xe1, 0x66 } }
 
 namespace mozilla {
 class ErrorResult;
@@ -18,11 +30,6 @@ struct CredentialData;
 } /* namespace dom */
 } /* namespace mozilla */
 
-#define mozilla_dom_Credential_h
-
-#include "mozilla/Attributes.h"
-#include "mozilla/ErrorResult.h"
-#include "nsCycleCollectionParticipant.h"
 
 struct JSContext;
 class nsIGlobalObject;
@@ -31,10 +38,13 @@ namespace mozilla {
 namespace dom {
 
 class Credential : public nsISupports /* or NonRefcountedDOMObject if this is a non-refcounted object */
+                 , public nsWrapperCache
 {
 public:
   NS_DECL_CYCLE_COLLECTING_ISUPPORTS
-  NS_DECL_CYCLE_COLLECTION_CLASS(Credential)
+  NS_DECL_CYCLE_COLLECTION_SCRIPT_HOLDER_CLASS(Credential)
+
+  NS_DECLARE_STATIC_IID_ACCESSOR(CREDENTIAL_IID)
 
 public:
   Credential();
@@ -46,6 +56,8 @@ protected:
   nsString mId;
   nsString mType;
 public:
+  virtual JSObject* WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto) override;
+
   nsIGlobalObject* GetParentObject() const { return mGlobal; }
 
   static already_AddRefed<Credential> Constructor(const GlobalObject& global, const CredentialData& data, ErrorResult& aRv);
@@ -54,6 +66,8 @@ public:
 
   void GetType(nsString& aRetVal) const { aRetVal = mType; }
 };
+
+NS_DEFINE_STATIC_IID_ACCESSOR(Credential, CREDENTIAL_IID)
 
 } // namespace dom
 } // namespace mozilla
