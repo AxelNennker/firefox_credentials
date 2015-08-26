@@ -17,8 +17,8 @@ namespace dom {
 
 NS_IMPL_ADDREF_INHERITED(FederatedCredential, LocallyStoredCredential)
 NS_IMPL_RELEASE_INHERITED(FederatedCredential, LocallyStoredCredential)
-NS_INTERFACE_MAP_BEGIN_CYCLE_COLLECTION(FederatedCredential)
-  NS_WRAPPERCACHE_INTERFACE_MAP_ENTRY
+
+NS_INTERFACE_MAP_BEGIN(FederatedCredential)
 NS_INTERFACE_MAP_END_INHERITING(LocallyStoredCredential)
 
 #if 0

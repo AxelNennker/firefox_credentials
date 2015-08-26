@@ -18,6 +18,10 @@ struct JSContext;
 namespace mozilla {
 namespace dom {
 
+#define FEDERATEDCREDENTIAL_IID \
+{ 0xec9fef4b, 0x8c3b, 0x9fd7, \
+ { 0xec, 0x03, 0xd4, 0xc2, 0x59, 0xa1, 0xe1, 0x88 } }
+
 class FederatedCredential : public LocallyStoredCredential
 {
 public:
@@ -29,6 +33,9 @@ public:
 protected:
   ~FederatedCredential();
   FederatedCredential(nsIGlobalObject* aGlobal, const FederatedCredentialData& data);
+
+  NS_DECLARE_STATIC_IID_ACCESSOR(FEDERATEDCREDENTIAL_IID)
+
   nsString mProvider;
   nsString mProtocol;
 
@@ -45,6 +52,8 @@ public:
 
   void GetProtocol(nsString& aRetVal) const { aRetVal = mProtocol; }
 };
+
+NS_DEFINE_STATIC_IID_ACCESSOR(FederatedCredential, FEDERATEDCREDENTIAL_IID)
 
 } // namespace dom
 } // namespace mozilla

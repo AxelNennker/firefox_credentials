@@ -28,6 +28,10 @@ struct PasswordCredentialData;
 struct JSContext;
 class nsIGlobalObject;
 
+#define PASSWORDCREDENTIAL_IID \
+{ 0xec9fef4b, 0x8c3b, 0x9fd7, \
+ { 0xec, 0x03, 0xd4, 0xc2, 0x59, 0xa1, 0xe1, 0x77 } }
+
 namespace mozilla {
 namespace dom {
 
@@ -38,6 +42,8 @@ public:
 
   PasswordCredential();
   PasswordCredential(nsIGlobalObject* aGlobal, const PasswordCredentialData& data);
+
+  NS_DECLARE_STATIC_IID_ACCESSOR(PASSWORDCREDENTIAL_IID)
 
 protected:
   ~PasswordCredential();
@@ -56,6 +62,8 @@ public:
   // Return a raw pointer here to avoid refcounting, but make sure it's safe (the object should be kept alive by the callee).
   already_AddRefed<Promise> Send(const nsAString& url);
 };
+
+NS_DEFINE_STATIC_IID_ACCESSOR(PasswordCredential, PASSWORDCREDENTIAL_IID)
 
 } // namespace dom
 } // namespace mozilla

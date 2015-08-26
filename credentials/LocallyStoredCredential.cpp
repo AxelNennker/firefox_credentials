@@ -11,6 +11,13 @@
 namespace mozilla {
 namespace dom {
 
+NS_IMPL_ADDREF_INHERITED(LocallyStoredCredential, Credential)
+NS_IMPL_RELEASE_INHERITED(LocallyStoredCredential, Credential)
+
+NS_INTERFACE_MAP_BEGIN(LocallyStoredCredential)
+NS_INTERFACE_MAP_END_INHERITING(Credential)
+
+
 LocallyStoredCredential::LocallyStoredCredential()
 {
     // Add |MOZ_COUNT_CTOR(LocallyStoredCredential);| for a non-refcounted object.
@@ -35,11 +42,6 @@ LocallyStoredCredential::LocallyStoredCredential(nsIGlobalObject* aGlobal, const
     // FIXME throw if not passed???
   }
 }
-
-NS_IMPL_ADDREF_INHERITED(LocallyStoredCredential, Credential)
-NS_IMPL_RELEASE_INHERITED(LocallyStoredCredential, Credential)
-NS_INTERFACE_MAP_BEGIN_CYCLE_COLLECTION(LocallyStoredCredential)
-NS_INTERFACE_MAP_END_INHERITING(Credential)
 
 } // namespace dom
 } // namespace mozilla

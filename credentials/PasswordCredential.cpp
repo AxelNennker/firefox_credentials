@@ -18,8 +18,8 @@ namespace dom {
 // Only needed for refcounted objects.
 NS_IMPL_ADDREF_INHERITED(PasswordCredential, LocallyStoredCredential)
 NS_IMPL_RELEASE_INHERITED(PasswordCredential, LocallyStoredCredential)
-NS_INTERFACE_MAP_BEGIN_CYCLE_COLLECTION(PasswordCredential)
-  NS_WRAPPERCACHE_INTERFACE_MAP_ENTRY
+
+NS_INTERFACE_MAP_BEGIN(PasswordCredential)
 NS_INTERFACE_MAP_END_INHERITING(LocallyStoredCredential)
 
 PasswordCredential::PasswordCredential()
