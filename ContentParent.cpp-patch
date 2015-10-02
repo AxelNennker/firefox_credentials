@@ -1,27 +1,26 @@
 diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 --- a/dom/ipc/ContentParent.cpp
 +++ b/dom/ipc/ContentParent.cpp
-@@ -162,16 +162,18 @@
- #include "prio.h"
- #include "private/pprio.h"
- #include "ContentProcessManager.h"
+@@ -172,16 +172,18 @@
+ #include "mozilla/dom/ipc/StructuredCloneData.h"
  #include "mozilla/psm/PSMContentListener.h"
  #include "nsPluginHost.h"
  #include "nsPluginTags.h"
  #include "nsIBlocklistService.h"
  
-+#include "nsILoginManager.h"
-+
  #include "nsIBidiKeyboard.h"
  
++#include "nsILoginManager.h"
++
  #ifdef MOZ_WEBRTC
  #include "signaling/src/peerconnection/WebrtcGlobalParent.h"
  #endif
  
  #if defined(ANDROID) || defined(LINUX)
  #include "nsSystemInfo.h"
-@@ -5213,16 +5215,45 @@ ContentParent::RecvBeginDriverCrashGuard
+ #endif
  
+@@ -5413,16 +5415,45 @@ ContentParent::RecvBeginDriverCrashGuard
  bool
  ContentParent::RecvEndDriverCrashGuard(const uint32_t& aGuardType)
  {
@@ -29,13 +28,13 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
    return true;
  }
  
-+bool
+ bool
 +ContentParent::RecvFindLogins(
 +            const nsString& prepath,
 +            nsString* aUsername,
 +            nsString* aPassword)
 +{
-+  nsCOMPtr<nsILoginManager> loginmanager = do_GetService("@mozilla.org/login-manager;1");
++  /*nsCOMPtr<nsILoginManager> loginmanager = do_GetService("@mozilla.org/login-manager;1");*/
 +  /*
 +  nsILoginInfo** loginInfos;
 +  nsAString httpRealm(prepath);
@@ -58,11 +57,12 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 +  return true;
 +}
 +
- } // namespace dom
- } // namespace mozilla
- 
- NS_IMPL_ISUPPORTS(ParentIdleListener, nsIObserver)
- 
- NS_IMETHODIMP
- ParentIdleListener::Observe(nsISupports*, const char* aTopic, const char16_t* aData) {
-     mozilla::unused << mParent->SendNotifyIdleObserver(mObserver,
++bool
+ ContentParent::RecvGetDeviceStorageLocation(const nsString& aType,
+                                             nsString* aPath) {
+ #ifdef MOZ_WIDGET_ANDROID
+   mozilla::AndroidBridge::GetExternalPublicDirectory(aType, *aPath);
+   return true;
+ #else
+   return false;
+ #endif

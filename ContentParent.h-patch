@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/ContentParent.h b/dom/ipc/ContentParent.h
 --- a/dom/ipc/ContentParent.h
 +++ b/dom/ipc/ContentParent.h
-@@ -383,16 +383,22 @@ public:
+@@ -418,16 +418,22 @@ public:
      virtual bool
      DeallocPContentPermissionRequestParent(PContentPermissionRequestParent* actor) override;
  

@@ -19,13 +19,13 @@ diff --git a/dom/base/Navigator.cpp b/dom/base/Navigator.cpp
  #include "mozilla/dom/IccManager.h"
  #include "mozilla/dom/InputPortManager.h"
  #include "mozilla/dom/MobileMessageManager.h"
-@@ -1013,16 +1014,27 @@ Navigator::GetDeviceStorageByNameAndType
-   if (!storage) {
+@@ -1069,16 +1070,27 @@ Navigator::GetDeviceStorageByNameAndType
      return nullptr;
    }
  
-   mDeviceStorageStores.AppendElement(storage);
-   return storage;
+   mDeviceStorageStores.AppendElement(
+     do_GetWeakReference(static_cast<DOMEventTargetHelper*>(storage)));
+   return storage.forget();
  }
  
 +CredentialContainer*

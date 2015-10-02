@@ -1,7 +1,7 @@
 diff --git a/dom/moz.build b/dom/moz.build
 --- a/dom/moz.build
 +++ b/dom/moz.build
-@@ -47,16 +47,17 @@ DIRS += [
+@@ -49,16 +49,17 @@ DIRS += [
      'requestsync',
      'bindings',
      'battery',

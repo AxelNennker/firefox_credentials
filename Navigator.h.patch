@@ -1,7 +1,7 @@
 diff --git a/dom/base/Navigator.h b/dom/base/Navigator.h
 --- a/dom/base/Navigator.h
 +++ b/dom/base/Navigator.h
-@@ -29,16 +29,17 @@ class nsIDOMNavigatorSystemMessages;
+@@ -30,16 +30,17 @@ class nsIDOMNavigatorSystemMessages;
  class nsDOMCameraManager;
  class nsDOMDeviceStorage;
  class nsIPrincipal;
@@ -19,7 +19,7 @@ diff --git a/dom/base/Navigator.h b/dom/base/Navigator.h
  struct MobileIdOptions;
  class ServiceWorkerContainer;
  } // namespace dom
-@@ -154,16 +155,17 @@ public:
+@@ -156,16 +157,17 @@ public:
                                 const nsAString& aTitle, ErrorResult& aRv);
    void RegisterContentHandler(const nsAString& aMIMEType, const nsAString& aURL,
                                const nsAString& aTitle, ErrorResult& aRv);
@@ -29,18 +29,18 @@ diff --git a/dom/base/Navigator.h b/dom/base/Navigator.h
    // The XPCOM GetDoNotTrack is ok
    Geolocation* GetGeolocation(ErrorResult& aRv);
 +  CredentialContainer* Credentials();
-   battery::BatteryManager* GetBattery(ErrorResult& aRv);
+   Promise* GetBattery(ErrorResult& aRv);
+   battery::BatteryManager* GetDeprecatedBattery(ErrorResult& aRv);
  
    static already_AddRefed<Promise> GetDataStores(nsPIDOMWindow* aWindow,
                                                   const nsAString& aName,
                                                   const nsAString& aOwner,
                                                   ErrorResult& aRv);
  
-   static void AppName(nsAString& aAppName, bool aUsePrefOverriddenValue);
-@@ -356,16 +358,17 @@ private:
+@@ -365,16 +367,17 @@ private:
  
-   bool CheckPermission(const char* type);
-   static bool CheckPermission(nsPIDOMWindow* aWindow, const char* aType);
+   already_AddRefed<nsDOMDeviceStorage> FindDeviceStorage(const nsAString& aName,
+                                                          const nsAString& aType);
  
    nsRefPtr<nsMimeTypeArray> mMimeTypes;
    nsRefPtr<nsPluginArray> mPlugins;
@@ -49,9 +49,9 @@ diff --git a/dom/base/Navigator.h b/dom/base/Navigator.h
 +  nsRefPtr<CredentialContainer> mCredentialContainer;
    nsRefPtr<DesktopNotificationCenter> mNotification;
    nsRefPtr<battery::BatteryManager> mBatteryManager;
+   nsRefPtr<Promise> mBatteryPromise;
  #ifdef MOZ_B2G_FM
    nsRefPtr<FMRadio> mFMRadio;
  #endif
    nsRefPtr<PowerManager> mPowerManager;
    nsRefPtr<CellBroadcast> mCellBroadcast;
-   nsRefPtr<IccManager> mIccManager;

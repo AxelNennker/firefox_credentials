@@ -1,13 +1,13 @@
 diff --git a/dom/ipc/PContent.ipdl b/dom/ipc/PContent.ipdl
 --- a/dom/ipc/PContent.ipdl
 +++ b/dom/ipc/PContent.ipdl
-@@ -659,16 +659,19 @@ child:
+@@ -672,16 +672,19 @@ child:
  
      /**
-      * Notify the child that presentation receiver has been launched with the
-      * correspondent iframe.
+      * Notify the child that the info about a presentation receiver needs to be
+      * cleaned up.
       */
-     async NotifyPresentationReceiverLaunched(PBrowser aIframe, nsString aSessionId);
+     async NotifyPresentationReceiverCleanUp(nsString aSessionId);
  
  parent:
 +    sync FindLogins(nsString prepath)

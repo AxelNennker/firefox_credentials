@@ -1,10 +1,10 @@
 diff --git a/dom/webidl/moz.build b/dom/webidl/moz.build
 --- a/dom/webidl/moz.build
 +++ b/dom/webidl/moz.build
-@@ -84,16 +84,17 @@ WEBIDL_FILES = [
+@@ -83,16 +83,17 @@ WEBIDL_FILES = [
+     'Comment.webidl',
      'CompositionEvent.webidl',
      'Console.webidl',
-     'Constraints.webidl',
      'Contacts.webidl',
      'ContainerBoxObject.webidl',
      'ConvolverNode.webidl',
