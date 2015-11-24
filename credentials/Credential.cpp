@@ -72,13 +72,11 @@ Credential::Constructor(const GlobalObject& aGlobal,
   MOZ_ASSERT(global, "expected a DOM window");
 
   nsCOMPtr<nsPIDOMWindow> window = do_QueryInterface(aGlobal.GetAsSupports());
-  nsIDOMLocation* location;
-  nsresult rv =  window->GetLocation(&location);
-  NS_ENSURE_SUCCESS(rv, nullptr);
-  if (isInherentlyInsecure(location)) {
+  nsIDOMLocation* location =  window->GetLocation();
+  if (location && isInherentlyInsecure(location)) {
     NS_WARNING("Do not use Credential on inherently insecure pages");
   }
-  nsRefPtr<Credential> ret = new Credential(global, data);
+  RefPtr<Credential> ret = new Credential(global, data);
   return ret.forget();
 }
 

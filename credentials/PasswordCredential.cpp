@@ -83,13 +83,12 @@ PasswordCredential::Constructor(const GlobalObject& aGlobal,
   MOZ_ASSERT(global, "expected a DOM window");
 
   nsCOMPtr<nsPIDOMWindow> window = do_QueryInterface(aGlobal.GetAsSupports());
-  nsIDOMLocation* location;
-  nsresult rv =  window->GetLocation(&location);
-  NS_ENSURE_SUCCESS(rv, nullptr);
-  if (isInherentlyInsecure(location)) {
+  nsIDOMLocation* location = window->GetLocation();
+  // FIXME NS_ENSURE_SUCCESS(rv, nullptr);
+  if ((location) && isInherentlyInsecure(location)) {
     NS_WARNING("Do not use PasswordCredential on inherently insecure pages");
   }
-  nsRefPtr<PasswordCredential> ret = new PasswordCredential(global, data);
+  RefPtr<PasswordCredential> ret = new PasswordCredential(global, data);
   return ret.forget();
 }
 
@@ -132,7 +131,7 @@ PasswordCredential::Send(const nsAString& url)
 
   RequestInit requestInit;
   requestInit.mMethod.Construct("POST");
-  nsRefPtr<nsFormData> formData = new nsFormData();
+  RefPtr<nsFormData> formData = new nsFormData();
   if (!mId.IsEmpty()) {
     formData->AddNameValuePair(NS_LITERAL_STRING("id"), mId);
   }

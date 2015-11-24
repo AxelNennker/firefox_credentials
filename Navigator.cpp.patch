@@ -19,7 +19,7 @@ diff --git a/dom/base/Navigator.cpp b/dom/base/Navigator.cpp
  #include "mozilla/dom/IccManager.h"
  #include "mozilla/dom/InputPortManager.h"
  #include "mozilla/dom/MobileMessageManager.h"
-@@ -1069,16 +1070,27 @@ Navigator::GetDeviceStorageByNameAndType
+@@ -1070,16 +1071,27 @@ Navigator::GetDeviceStorageByNameAndType
      return nullptr;
    }
  

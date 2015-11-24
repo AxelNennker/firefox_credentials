@@ -1,21 +1,21 @@
 diff --git a/dom/ipc/ContentParent.h b/dom/ipc/ContentParent.h
 --- a/dom/ipc/ContentParent.h
 +++ b/dom/ipc/ContentParent.h
-@@ -418,16 +418,22 @@ public:
-     virtual bool
-     DeallocPContentPermissionRequestParent(PContentPermissionRequestParent* actor) override;
- 
-     bool HasGamepadListener() const { return mHasGamepadListener; }
- 
-     void SetNuwaParent(NuwaParent* aNuwaParent) { mNuwaParent = aNuwaParent; }
-     void ForkNewProcess(bool aBlocking);
+@@ -445,16 +445,22 @@ public:
+                                   const nsString& aName,
+                                   const nsCString& aFeatures,
+                                   const nsCString& aBaseURI,
+                                   nsresult* aResult,
+                                   bool* aWindowIsNew,
+                                   InfallibleTArray<FrameScriptInfo>* aFrameScripts,
+                                   nsCString* aURLToLoad) override;
  
 +    virtual bool
 +    RecvFindLogins(
 +            const nsString& prepath,
 +            nsString* username,
 +            nsString* password) override;
-+
++ 
  protected:
      void OnChannelConnected(int32_t pid) override;
      virtual void ActorDestroy(ActorDestroyReason why) override;

@@ -1,13 +1,13 @@
 diff --git a/dom/ipc/PContent.ipdl b/dom/ipc/PContent.ipdl
 --- a/dom/ipc/PContent.ipdl
 +++ b/dom/ipc/PContent.ipdl
-@@ -672,16 +672,19 @@ child:
+@@ -703,16 +703,19 @@ child:
+     async NotifyPresentationReceiverCleanUp(nsString aSessionId);
  
      /**
-      * Notify the child that the info about a presentation receiver needs to be
-      * cleaned up.
+      * Notify the child that the Gecko Media Plugins installed changed.
       */
-     async NotifyPresentationReceiverCleanUp(nsString aSessionId);
+     async NotifyGMPsChanged();
  
  parent:
 +    sync FindLogins(nsString prepath)

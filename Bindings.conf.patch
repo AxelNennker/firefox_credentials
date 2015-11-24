@@ -1,7 +1,7 @@
 diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
 --- a/dom/bindings/Bindings.conf
 +++ b/dom/bindings/Bindings.conf
-@@ -310,16 +310,24 @@ DOMInterfaces = {
+@@ -318,16 +318,24 @@ DOMInterfaces = {
  'ConvolverNode': {
      'implicitJSContext': [ 'buffer' ],
  },
@@ -26,13 +26,13 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
      'concrete': False,
  },
  
-@@ -480,16 +488,20 @@ DOMInterfaces = {
-     },
+@@ -493,16 +501,20 @@ DOMInterfaces = {
+     'nativeType': 'mozilla::dom::workers::ExtendableEvent',
  },
  
- 'ExtendableEvent': {
+ 'ExtendableMessageEvent': {
      'headerFile': 'mozilla/dom/ServiceWorkerEvents.h',
-     'nativeType': 'mozilla::dom::workers::ExtendableEvent',
+     'nativeType': 'mozilla::dom::workers::ExtendableMessageEvent',
  },
  
 +'FederatedCredential' : {
@@ -45,9 +45,9 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
      'binaryNames': {
          'request': 'request_'
      },
+     'implicitJSContext': [ 'respondWith' ],
  },
- 
-@@ -700,16 +712,21 @@ DOMInterfaces = {
+@@ -714,16 +726,21 @@ DOMInterfaces = {
      'concrete': False
  },
  
@@ -69,7 +69,7 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
  'Location': {
      'nativeType': 'nsLocation',
  },
-@@ -899,16 +916,20 @@ DOMInterfaces = {
+@@ -913,16 +930,20 @@ DOMInterfaces = {
  'OfflineResourceList': {
      'nativeType': 'nsDOMOfflineResourceList',
  },

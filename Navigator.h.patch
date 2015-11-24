@@ -37,21 +37,21 @@ diff --git a/dom/base/Navigator.h b/dom/base/Navigator.h
                                                   const nsAString& aOwner,
                                                   ErrorResult& aRv);
  
-@@ -365,16 +367,17 @@ private:
+@@ -367,16 +369,17 @@ private:
  
    already_AddRefed<nsDOMDeviceStorage> FindDeviceStorage(const nsAString& aName,
                                                           const nsAString& aType);
  
-   nsRefPtr<nsMimeTypeArray> mMimeTypes;
-   nsRefPtr<nsPluginArray> mPlugins;
-   nsRefPtr<Permissions> mPermissions;
-   nsRefPtr<Geolocation> mGeolocation;
-+  nsRefPtr<CredentialContainer> mCredentialContainer;
-   nsRefPtr<DesktopNotificationCenter> mNotification;
-   nsRefPtr<battery::BatteryManager> mBatteryManager;
-   nsRefPtr<Promise> mBatteryPromise;
+   RefPtr<nsMimeTypeArray> mMimeTypes;
+   RefPtr<nsPluginArray> mPlugins;
+   RefPtr<Permissions> mPermissions;
+   RefPtr<Geolocation> mGeolocation;
++  RefPtr<CredentialContainer> mCredentialContainer;
+   RefPtr<DesktopNotificationCenter> mNotification;
+   RefPtr<battery::BatteryManager> mBatteryManager;
+   RefPtr<Promise> mBatteryPromise;
  #ifdef MOZ_B2G_FM
-   nsRefPtr<FMRadio> mFMRadio;
+   RefPtr<FMRadio> mFMRadio;
  #endif
-   nsRefPtr<PowerManager> mPowerManager;
-   nsRefPtr<CellBroadcast> mCellBroadcast;
+   RefPtr<PowerManager> mPowerManager;
+   RefPtr<CellBroadcast> mCellBroadcast;

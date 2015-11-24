@@ -1,6 +1,6 @@
 #!/bin/sh
-srctopatch="/home/ignisvulpis/mozilla/firefox"
-w3credentials="/home/ignisvulpis/mozilla/W3Credentials"
+srctopatch="/media/sdb1/mozilla/firefox"
+w3credentials="/media/sdb1/mozilla/W3Credentials"
 echo $srctopatch
 echo $w3credentials
 rm -rf "$srctopatch/dom/credentials/"

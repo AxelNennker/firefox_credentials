@@ -76,7 +76,7 @@ CredentialContainer::Get(
   if (XRE_GetProcessType() != GeckoProcessType_Default) {
     ErrorResult result;
     nsCOMPtr<nsIGlobalObject> go = do_QueryInterface(mWindow);
-    nsRefPtr<Promise> p = Promise::Create(go, result);
+    RefPtr<Promise> p = Promise::Create(go, result);
     if (result.Failed()) {
       return nullptr;
     }

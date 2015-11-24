@@ -1,7 +1,7 @@
 diff --git a/dom/webidl/moz.build b/dom/webidl/moz.build
 --- a/dom/webidl/moz.build
 +++ b/dom/webidl/moz.build
-@@ -83,16 +83,17 @@ WEBIDL_FILES = [
+@@ -85,16 +85,17 @@ WEBIDL_FILES = [
      'Comment.webidl',
      'CompositionEvent.webidl',
      'Console.webidl',

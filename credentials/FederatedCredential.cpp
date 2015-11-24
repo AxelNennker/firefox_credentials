@@ -83,12 +83,14 @@ FederatedCredential::Constructor(const GlobalObject& aGlobal,
 
   nsCOMPtr<nsPIDOMWindow> window = do_QueryInterface(aGlobal.GetAsSupports());
   nsIDOMLocation* location;
-  nsresult rv =  window->GetLocation(&location);
-  NS_ENSURE_SUCCESS(rv, nullptr);
-  /*if (isInherentlyInsecure(location)) {
+  location = window->GetLocation();
+  //NS_ENSURE_SUCCESS(rv, nullptr);
+  /*
+   * FIXME
+   * if (isInherentlyInsecure(location)) {
     NS_WARNING("Do not use FederatedCredential on inherently insecure pages");
   }*/
-  nsRefPtr<FederatedCredential> ret = new FederatedCredential(global, data);
+  RefPtr<FederatedCredential> ret = new FederatedCredential(global, data);
   return ret.forget();
 }
 

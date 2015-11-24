@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 --- a/dom/ipc/ContentParent.cpp
 +++ b/dom/ipc/ContentParent.cpp
-@@ -172,16 +172,18 @@
+@@ -183,16 +183,18 @@
  #include "mozilla/dom/ipc/StructuredCloneData.h"
  #include "mozilla/psm/PSMContentListener.h"
  #include "nsPluginHost.h"
@@ -20,7 +20,7 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  #include "nsSystemInfo.h"
  #endif
  
-@@ -5413,16 +5415,45 @@ ContentParent::RecvBeginDriverCrashGuard
+@@ -5726,16 +5728,45 @@ ContentParent::RecvBeginDriverCrashGuard
  bool
  ContentParent::RecvEndDriverCrashGuard(const uint32_t& aGuardType)
  {

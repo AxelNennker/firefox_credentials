@@ -1,6 +1,6 @@
 #!/bin/bash
-srctopatch="/home/ignisvulpis/mozilla/firefox"
-w3credentials="/home/ignisvulpis/mozilla/W3Credentials"
+srctopatch="/media/sdb1/mozilla/firefox"
+w3credentials="/media/sdb1/mozilla/W3Credentials"
 echo $srctopatch
 echo $w3credentials
 (cd $w3credentials && tar cf - credentials | (cd "$srctopatch/dom/" && tar xf -))
