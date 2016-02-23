@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 --- a/dom/ipc/ContentParent.cpp
 +++ b/dom/ipc/ContentParent.cpp
-@@ -183,16 +183,18 @@
+@@ -184,16 +184,18 @@
  #include "mozilla/dom/ipc/StructuredCloneData.h"
  #include "mozilla/psm/PSMContentListener.h"
  #include "nsPluginHost.h"
@@ -20,19 +20,16 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  #include "nsSystemInfo.h"
  #endif
  
-@@ -5726,16 +5728,45 @@ ContentParent::RecvBeginDriverCrashGuard
- bool
- ContentParent::RecvEndDriverCrashGuard(const uint32_t& aGuardType)
- {
-   mDriverCrashGuard = nullptr;
+@@ -3031,16 +3033,43 @@ ContentParent::RecvAudioChannelServiceSt
+   MOZ_ASSERT(service);
+ 
+   service->ChildStatusReceived(mChildID, aTelephonyChannel,
+                                aContentOrNormalChannel, aAnyChannel);
    return true;
  }
  
  bool
-+ContentParent::RecvFindLogins(
-+            const nsString& prepath,
-+            nsString* aUsername,
-+            nsString* aPassword)
++ContentParent::RecvFindLogins(const uint64_t& aGetterId, const nsString& aPrepath)
 +{
 +  /*nsCOMPtr<nsILoginManager> loginmanager = do_GetService("@mozilla.org/login-manager;1");*/
 +  /*
@@ -52,17 +49,18 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 +    *aPassword.Assign(password);
 +  }
 +  */
-+  *aUsername = NS_LITERAL_STRING("username");
-+  *aPassword = NS_LITERAL_STRING("password");
++  nsString username = NS_LITERAL_STRING("username");
++  nsString password = NS_LITERAL_STRING("password");
++  SendLoginsForPath(aGetterId, aPrepath, username, password);
 +  return true;
 +}
 +
 +bool
- ContentParent::RecvGetDeviceStorageLocation(const nsString& aType,
-                                             nsString* aPath) {
- #ifdef MOZ_WIDGET_ANDROID
-   mozilla::AndroidBridge::GetExternalPublicDirectory(aType, *aPath);
-   return true;
- #else
-   return false;
- #endif
+ ContentParent::RecvDataStoreGetStores(
+                                     const nsString& aName,
+                                     const nsString& aOwner,
+                                     const IPC::Principal& aPrincipal,
+                                     InfallibleTArray<DataStoreSetting>* aValue)
+ {
+   RefPtr<DataStoreService> service = DataStoreService::GetOrCreate();
+   if (NS_WARN_IF(!service)) {

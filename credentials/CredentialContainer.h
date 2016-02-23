@@ -15,32 +15,33 @@
 #include "Promise.h"
 
 struct JSContext;
-class nsPIDOMWindow;
+class nsPIDOMWindowInner;
 class nsILoginManager;
 
 namespace mozilla {
 namespace dom {
 
-struct CredentialRequest;
-class PasswordCredential;
+class Credential;
+struct CredentialRequestOptions;
+class Promise;
 
 class CredentialContainer final : public nsISupports /* or NonRefcountedDOMObject if this is a non-refcounted object */,
-                                   public nsWrapperCache /* Change wrapperCache in the binding configuration if you don't want this */
+                                  public nsWrapperCache /* Change wrapperCache in the binding configuration if you don't want this */
 {
 public:
   NS_DECL_CYCLE_COLLECTING_ISUPPORTS
   NS_DECL_CYCLE_COLLECTION_SCRIPT_HOLDER_CLASS(CredentialContainer)
 
 public:
-  CredentialContainer(nsPIDOMWindow *aWindow);
+  CredentialContainer(nsPIDOMWindowInner *aWindow);
 
 protected:
   // FIXME add to cycle collection
-  nsCOMPtr<nsPIDOMWindow> mWindow;
+  nsCOMPtr<nsPIDOMWindowInner> mWindow;
   ~CredentialContainer();
 
 public:
-  nsPIDOMWindow* GetParentObject() const { return mWindow; }
+  nsPIDOMWindowInner* GetParentObject() const { return mWindow; }
 
 #if 0
   JSObject* WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector);
@@ -48,10 +49,10 @@ public:
   JSObject* WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto);
 #endif
   // Return a raw pointer here to avoid refcounting, but make sure it's safe (the object should be kept alive by the callee).
-  already_AddRefed<Promise> Get(const CredentialRequest& request);
+  already_AddRefed<Promise> Get(const CredentialRequestOptions& request);
 
   // Return a raw pointer here to avoid refcounting, but make sure it's safe (the object should be kept alive by the callee).
-  already_AddRefed<Promise> Store(PasswordCredential& credential);
+  already_AddRefed<Promise> Store(Credential& credential);
 
   // Return a raw pointer here to avoid refcounting, but make sure it's safe (the object should be kept alive by the callee).
   already_AddRefed<Promise> RequireUserMediation();

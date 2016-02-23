@@ -5,7 +5,7 @@
 #include "mozilla/dom/CredentialContainerBinding.h"
 #include "mozilla/dom/FetchBinding.h"
 #include "mozilla/dom/RequestBinding.h"
-#include "nsFormData.h"
+#include "FormData.h"
 #include "nsIDOMLocation.h"
 #include "nsIIOService.h"
 #include "nsIURI.h"
@@ -16,11 +16,11 @@ namespace mozilla {
 namespace dom {
 
 // Only needed for refcounted objects.
-NS_IMPL_ADDREF_INHERITED(PasswordCredential, LocallyStoredCredential)
-NS_IMPL_RELEASE_INHERITED(PasswordCredential, LocallyStoredCredential)
+NS_IMPL_ADDREF_INHERITED(PasswordCredential, OriginBoundCredential)
+NS_IMPL_RELEASE_INHERITED(PasswordCredential, OriginBoundCredential)
 
 NS_INTERFACE_MAP_BEGIN(PasswordCredential)
-NS_INTERFACE_MAP_END_INHERITING(LocallyStoredCredential)
+NS_INTERFACE_MAP_END_INHERITING(OriginBoundCredential)
 
 PasswordCredential::PasswordCredential()
 {
@@ -31,7 +31,7 @@ PasswordCredential::~PasswordCredential()
 }
 
 PasswordCredential::PasswordCredential(nsIGlobalObject* aGlobal, const PasswordCredentialData& data)
-  : LocallyStoredCredential(aGlobal, data)
+  : OriginBoundCredential(aGlobal, data)
 {
   mType.AssignLiteral("password");
   if (data.mPassword.WasPassed()) {
@@ -82,7 +82,7 @@ PasswordCredential::Constructor(const GlobalObject& aGlobal,
   nsCOMPtr<nsIGlobalObject> global = do_QueryInterface(aGlobal.GetAsSupports());
   MOZ_ASSERT(global, "expected a DOM window");
 
-  nsCOMPtr<nsPIDOMWindow> window = do_QueryInterface(aGlobal.GetAsSupports());
+  nsCOMPtr<nsPIDOMWindowInner> window = do_QueryInterface(aGlobal.GetAsSupports());
   nsIDOMLocation* location = window->GetLocation();
   // FIXME NS_ENSURE_SUCCESS(rv, nullptr);
   if ((location) && isInherentlyInsecure(location)) {
@@ -131,7 +131,7 @@ PasswordCredential::Send(const nsAString& url)
 
   RequestInit requestInit;
   requestInit.mMethod.Construct("POST");
-  RefPtr<nsFormData> formData = new nsFormData();
+  RefPtr<FormData> formData = new FormData();
   if (!mId.IsEmpty()) {
     formData->AddNameValuePair(NS_LITERAL_STRING("id"), mId);
   }
@@ -149,6 +149,11 @@ PasswordCredential::Send(const nsAString& url)
   requestInit.mBody.Value().SetAsFormData() = formData;
 
   return FetchRequest(mGlobal, requestOrUSVString, requestInit, errorresult);
+}
+
+void PasswordCredential::SetAdditionalData(const Nullable<FormDataOrURLSearchParams>& arg)
+{
+  //mAdditionalData = arg;
 }
 
 } // namespace dom

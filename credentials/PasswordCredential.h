@@ -9,6 +9,8 @@
 #include "nsCOMPtr.h"
 #include "nsIGlobalObject.h"
 #include "mozilla/dom/Promise.h"
+#include "FormData.h"
+#include "mozilla/dom/URLSearchParams.h"
 
 namespace mozilla {
 class ErrorResult;
@@ -23,7 +25,7 @@ struct PasswordCredentialData;
 #include "mozilla/Attributes.h"
 #include "mozilla/ErrorResult.h"
 
-#include "mozilla/dom/LocallyStoredCredential.h"
+#include "mozilla/dom/OriginBoundCredential.h"
 
 struct JSContext;
 class nsIGlobalObject;
@@ -35,8 +37,10 @@ class nsIGlobalObject;
 namespace mozilla {
 namespace dom {
 
-class PasswordCredential final : public LocallyStoredCredential
+class PasswordCredential final : public OriginBoundCredential
 {
+  FormDataOrURLSearchParams mAdditionalData;
+
 public:
   NS_DECL_ISUPPORTS_INHERITED
 
@@ -48,6 +52,10 @@ public:
 protected:
   ~PasswordCredential();
   nsString mPassword;
+  nsString mPasswordName;
+  nsString mIdName;
+  FormData *mFormData;
+  URLSearchParams *mURLSearchParams;
 public:
 #if 0
     virtual bool WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector) override;
@@ -58,6 +66,28 @@ public:
   static already_AddRefed<PasswordCredential> Constructor(const GlobalObject& global, const PasswordCredentialData& data, ErrorResult& aRv);
 
   void GetPassword(nsString& aRetVal) const { aRetVal = mPassword; }
+
+  void GetIdName(nsString& aRetVal) const { aRetVal = mIdName; };
+
+  void SetIdName(const nsAString& aIdName) { mIdName = aIdName; };
+
+  void GetPasswordName(nsString& aRetVal) const { aRetVal = mPassword; };
+
+  void SetPasswordName(const nsAString& aPasswordName) { mPasswordName = aPasswordName; };
+
+  void GetAdditionalData(Nullable<OwningFormDataOrURLSearchParams>& aRetVal) const {
+    if (mFormData) {
+      aRetVal.SetValue().SetAsFormData() = *mFormData;
+    } else {
+      if (mURLSearchParams) {
+        aRetVal.SetValue().SetAsURLSearchParams() = *mURLSearchParams;
+      } else {
+        aRetVal.SetNull();
+      }
+    }
+  }
+
+  void SetAdditionalData(const Nullable<FormDataOrURLSearchParams>& arg);
 
   // Return a raw pointer here to avoid refcounting, but make sure it's safe (the object should be kept alive by the callee).
   already_AddRefed<Promise> Send(const nsAString& url);

@@ -7,7 +7,7 @@
 #include "mozilla/dom/FederatedCredential.h"
 
 #include "mozilla/dom/CredentialContainerBinding.h"
-#include "mozilla/dom/LocallyStoredCredential.h"
+#include "mozilla/dom/OriginBoundCredential.h"
 
 #include "nsWrapperCache.h"
 
@@ -15,11 +15,11 @@ namespace mozilla {
 namespace dom {
 
 
-NS_IMPL_ADDREF_INHERITED(FederatedCredential, LocallyStoredCredential)
-NS_IMPL_RELEASE_INHERITED(FederatedCredential, LocallyStoredCredential)
+NS_IMPL_ADDREF_INHERITED(FederatedCredential, OriginBoundCredential)
+NS_IMPL_RELEASE_INHERITED(FederatedCredential, OriginBoundCredential)
 
 NS_INTERFACE_MAP_BEGIN(FederatedCredential)
-NS_INTERFACE_MAP_END_INHERITING(LocallyStoredCredential)
+NS_INTERFACE_MAP_END_INHERITING(OriginBoundCredential)
 
 #if 0
 bool
@@ -81,17 +81,36 @@ FederatedCredential::Constructor(const GlobalObject& aGlobal,
   nsCOMPtr<nsIGlobalObject> global = do_QueryInterface(aGlobal.GetAsSupports());
   MOZ_ASSERT(global, "expected a DOM window");
 
-  nsCOMPtr<nsPIDOMWindow> window = do_QueryInterface(aGlobal.GetAsSupports());
-  nsIDOMLocation* location;
-  location = window->GetLocation();
+  nsCOMPtr<nsPIDOMWindowInner> window = do_QueryInterface(aGlobal.GetAsSupports());
   //NS_ENSURE_SUCCESS(rv, nullptr);
   /*
    * FIXME
+   * nsIDOMLocation* location;
+   * location = window->GetLocation();
    * if (isInherentlyInsecure(location)) {
     NS_WARNING("Do not use FederatedCredential on inherently insecure pages");
   }*/
   RefPtr<FederatedCredential> ret = new FederatedCredential(global, data);
   return ret.forget();
+}
+
+static // Return a raw pointer here to avoid refcounting, but make sure it's safe (the object should be kept alive by the callee).
+already_AddRefed<Promise> 
+RegisterAsProvider(const GlobalObject& aGlobal, const nsAString& protocol)
+{
+  ErrorResult result;
+  nsCOMPtr<nsIGlobalObject> global = do_QueryInterface(aGlobal.GetAsSupports());
+  if (!global) {
+    result.Throw(NS_ERROR_UNEXPECTED);
+    return nullptr;
+  }
+  RefPtr<Promise> p = Promise::Create(global, result);
+  if (result.Failed()) {
+    result.Throw(NS_ERROR_UNEXPECTED);
+    return nullptr;
+  }
+  // FIXME not implemennted
+  return p.forget();
 }
 
 } // namespace dom

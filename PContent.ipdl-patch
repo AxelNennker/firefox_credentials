@@ -1,17 +1,19 @@
 diff --git a/dom/ipc/PContent.ipdl b/dom/ipc/PContent.ipdl
 --- a/dom/ipc/PContent.ipdl
 +++ b/dom/ipc/PContent.ipdl
-@@ -703,16 +703,19 @@ child:
-     async NotifyPresentationReceiverCleanUp(nsString aSessionId);
+@@ -738,17 +738,21 @@ child:
+      */
+     async PushWithData(nsCString scope, Principal principal, uint8_t[] data);
  
      /**
-      * Notify the child that the Gecko Media Plugins installed changed.
+      * Send a `pushsubscriptionchange` event to a service worker in the child.
       */
-     async NotifyGMPsChanged();
+     async PushSubscriptionChange(nsCString scope, Principal principal);
  
++    async LoginsForPath(uint64_t getterId, nsString prepath, nsString username, nsString password);
++
  parent:
-+    sync FindLogins(nsString prepath)
-+        returns (nsString username, nsString password);
++    async FindLogins(uint64_t getterId, nsString prepath);
 +
      /**
       * Tell the content process some attributes of itself.  This is

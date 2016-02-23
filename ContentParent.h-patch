@@ -1,26 +1,25 @@
 diff --git a/dom/ipc/ContentParent.h b/dom/ipc/ContentParent.h
 --- a/dom/ipc/ContentParent.h
 +++ b/dom/ipc/ContentParent.h
-@@ -445,16 +445,22 @@ public:
-                                   const nsString& aName,
-                                   const nsCString& aFeatures,
-                                   const nsCString& aBaseURI,
-                                   nsresult* aResult,
-                                   bool* aWindowIsNew,
-                                   InfallibleTArray<FrameScriptInfo>* aFrameScripts,
-                                   nsCString* aURLToLoad) override;
+@@ -501,17 +501,21 @@ public:
+                                 const nsString& aName,
+                                 const nsCString& aFeatures,
+                                 const nsCString& aBaseURI,
+                                 nsresult* aResult,
+                                 bool* aWindowIsNew,
+                                 InfallibleTArray<FrameScriptInfo>* aFrameScripts,
+                                 nsCString* aURLToLoad) override;
  
-+    virtual bool
-+    RecvFindLogins(
-+            const nsString& prepath,
-+            nsString* username,
-+            nsString* password) override;
-+ 
++  // void SendLoginsForPath(const uint64_t& getterId, nsString prepath, nsString username, nsString password);
++
  protected:
-     void OnChannelConnected(int32_t pid) override;
-     virtual void ActorDestroy(ActorDestroyReason why) override;
-     void OnNuwaForkTimeout();
++  virtual bool RecvFindLogins(const uint64_t& getterId, const nsString& prepath) override;
++
+   void OnChannelConnected(int32_t pid) override;
  
-     bool ShouldContinueFromReplyTimeout() override;
+   virtual void ActorDestroy(ActorDestroyReason why) override;
  
- private:
+   void OnNuwaForkTimeout();
+ 
+   bool ShouldContinueFromReplyTimeout() override;
+ 

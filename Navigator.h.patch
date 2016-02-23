@@ -18,8 +18,8 @@ diff --git a/dom/base/Navigator.h b/dom/base/Navigator.h
  class ArrayBufferViewOrBlobOrStringOrFormData;
  struct MobileIdOptions;
  class ServiceWorkerContainer;
- } // namespace dom
-@@ -156,16 +157,17 @@ public:
+ class DOMRequest;
+@@ -157,16 +158,17 @@ public:
                                 const nsAString& aTitle, ErrorResult& aRv);
    void RegisterContentHandler(const nsAString& aMIMEType, const nsAString& aURL,
                                const nsAString& aTitle, ErrorResult& aRv);
@@ -32,12 +32,12 @@ diff --git a/dom/base/Navigator.h b/dom/base/Navigator.h
    Promise* GetBattery(ErrorResult& aRv);
    battery::BatteryManager* GetDeprecatedBattery(ErrorResult& aRv);
  
-   static already_AddRefed<Promise> GetDataStores(nsPIDOMWindow* aWindow,
+   static already_AddRefed<Promise> GetDataStores(nsPIDOMWindowInner* aWindow,
                                                   const nsAString& aName,
                                                   const nsAString& aOwner,
                                                   ErrorResult& aRv);
  
-@@ -367,16 +369,17 @@ private:
+@@ -378,16 +380,17 @@ private:
  
    already_AddRefed<nsDOMDeviceStorage> FindDeviceStorage(const nsAString& aName,
                                                           const nsAString& aType);

@@ -1,39 +1,43 @@
 dictionary CredentialData {
-  DOMString id;
+  USVString id;
 };
 
-dictionary LocallyStoredCredentialData : CredentialData {
-  DOMString name;
+interface Credential {
+  readonly attribute USVString id;
+  readonly attribute DOMString type;
+};
+
+dictionary OriginBoundCredentialData : CredentialData {
+  USVString name;
   USVString iconURL;
 };
 
-dictionary PasswordCredentialData : LocallyStoredCredentialData {
-  DOMString password;
+interface OriginBoundCredential : Credential {
+  readonly attribute USVString name;
+  readonly attribute USVString iconURL;
 };
 
-dictionary FederatedCredentialData : LocallyStoredCredentialData {
+dictionary PasswordCredentialData : OriginBoundCredentialData {
+  USVString password;
+};
+
+typedef (FormData or URLSearchParams) CredentialBodyType;
+
+[Constructor(PasswordCredentialData data), Exposed=Window]
+interface PasswordCredential : OriginBoundCredential {
+  attribute USVString idName;
+  attribute USVString passwordName;
+
+  attribute CredentialBodyType? additionalData;
+};
+
+dictionary FederatedCredentialData : OriginBoundCredentialData {
   USVString provider;
   DOMString protocol;
 };
 
-interface Credential {
-  readonly attribute DOMString id;
-  readonly attribute DOMString type;
-};
-/*Credential implements Transferable;*/
-
-interface LocallyStoredCredential : Credential {
-  readonly attribute DOMString name;
-  readonly attribute USVString iconURL;
-};
-
-[Constructor(PasswordCredentialData data), Exposed=Window]
-interface PasswordCredential : LocallyStoredCredential {
-  Promise<Response> send(USVString url);
-};
-
 [Constructor(FederatedCredentialData data), Exposed=Window]
-interface FederatedCredential : LocallyStoredCredential {
+interface FederatedCredential : OriginBoundCredential {
   readonly attribute USVString provider;
   readonly attribute DOMString? protocol;
 };
@@ -43,21 +47,19 @@ partial interface Navigator {
 };
 
 interface CredentialContainer {
-  Promise<Credential?> get(optional CredentialRequest request);
-  /*Promise<Credential> store(optional Credential credential);
-  Promise<void> requireUserMediation();*/
+  Promise<Credential?> get(optional CredentialRequestOptions options);
+  Promise<Credential> store(Credential credential);
+  Promise<void> requireUserMediation();
+};
+
+dictionary CredentialRequestOptions {
+  boolean password = false;
+  FederatedCredentialRequestOptions federated;
+
+  boolean suppressUI = false;
 };
 
 dictionary FederatedCredentialRequestOptions {
   sequence<USVString> providers;
   sequence<DOMString> protocols;
 };
-
-typedef FederatedCredentialRequestOptions CredentialRequestOptions;
-
-dictionary CredentialRequest {
-  CredentialRequestOptions options;
-  boolean suppressUI = false;
-  sequence<DOMString> types;
-};
-

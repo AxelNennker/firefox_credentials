@@ -3,7 +3,7 @@
 #include "mozilla/dom/CredentialContainerBinding.h"
 #include "mozilla/dom/FetchBinding.h"
 #include "mozilla/dom/RequestBinding.h"
-#include "nsFormData.h"
+#include "FormData.h"
 #include "nsIDOMLocation.h"
 #include "nsIIOService.h"
 #include "nsIURI.h"
@@ -71,7 +71,7 @@ Credential::Constructor(const GlobalObject& aGlobal,
   nsCOMPtr<nsIGlobalObject> global = do_QueryInterface(aGlobal.GetAsSupports());
   MOZ_ASSERT(global, "expected a DOM window");
 
-  nsCOMPtr<nsPIDOMWindow> window = do_QueryInterface(aGlobal.GetAsSupports());
+  nsCOMPtr<nsPIDOMWindowInner> window = do_QueryInterface(aGlobal.GetAsSupports());
   nsIDOMLocation* location =  window->GetLocation();
   if (location && isInherentlyInsecure(location)) {
     NS_WARNING("Do not use Credential on inherently insecure pages");

@@ -11,7 +11,9 @@
 #include "mozilla/ErrorResult.h"
 #include "nsCycleCollectionParticipant.h"
 
-#include "mozilla/dom/LocallyStoredCredential.h"
+#include "mozilla/dom/OriginBoundCredential.h"
+
+#include "Promise.h"
 
 struct JSContext;
 
@@ -22,7 +24,7 @@ namespace dom {
 { 0xec9fef4b, 0x8c3b, 0x9fd7, \
  { 0xec, 0x03, 0xd4, 0xc2, 0x59, 0xa1, 0xe1, 0x88 } }
 
-class FederatedCredential : public LocallyStoredCredential
+class FederatedCredential : public OriginBoundCredential
 {
 public:
   NS_DECL_ISUPPORTS_INHERITED
@@ -51,6 +53,9 @@ public:
   void GetProvider(nsString& aRetVal) const { aRetVal = mProvider; }
 
   void GetProtocol(nsString& aRetVal) const { aRetVal = mProtocol; }
+
+  static // Return a raw pointer here to avoid refcounting, but make sure it's safe (the object should be kept alive by the callee).
+  already_AddRefed<Promise> RegisterAsProvider(const GlobalObject& global, const nsAString& protocol);
 };
 
 NS_DEFINE_STATIC_IID_ACCESSOR(FederatedCredential, FEDERATEDCREDENTIAL_IID)
