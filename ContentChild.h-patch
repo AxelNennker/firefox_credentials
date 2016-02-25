@@ -1,0 +1,27 @@
+diff --git a/dom/ipc/ContentChild.h b/dom/ipc/ContentChild.h
+--- a/dom/ipc/ContentChild.h
++++ b/dom/ipc/ContentChild.h
+@@ -399,16 +399,23 @@ public:
+ 
+   virtual bool RecvBidiKeyboardNotify(const bool& isLangRTL) override;
+ 
+   virtual bool RecvNotifyVisited(const URIParams& aURI) override;
+ 
+   // auto remove when alertfinished is received.
+   nsresult AddRemoteAlertObserver(const nsString& aData, nsIObserver* aObserver);
+ 
++  virtual bool RecvLoginsForPath(const uint64_t& aGetterId,
++                                 const nsString& aPrepath,
++                                 const nsString& aUsername,
++                                 const nsString& aPassword) override;
++
++  //void SendFindLogins(const uint64_t& aGetterId, const nsString& aPrepath);
++  
+   virtual bool RecvSystemMemoryAvailable(const uint64_t& aGetterId,
+                                          const uint32_t& aMemoryAvailable) override;
+ 
+   virtual bool RecvPreferenceUpdate(const PrefSetting& aPref) override;
+ 
+   virtual bool RecvDataStoragePut(const nsString& aFilename,
+                                   const DataStorageItem& aItem) override;
+ 

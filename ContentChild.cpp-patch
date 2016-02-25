@@ -1,0 +1,63 @@
+diff --git a/dom/ipc/ContentChild.cpp b/dom/ipc/ContentChild.cpp
+--- a/dom/ipc/ContentChild.cpp
++++ b/dom/ipc/ContentChild.cpp
+@@ -52,16 +52,19 @@
+ #include "mozilla/net/NeckoChild.h"
+ #include "mozilla/plugins/PluginInstanceParent.h"
+ #include "mozilla/plugins/PluginModuleParent.h"
+ #include "mozilla/widget/WidgetMessageUtils.h"
+ #include "mozilla/media/MediaChild.h"
+ #include "mozilla/BasePrincipal.h"
+ #include "mozilla/WebBrowserPersistDocumentChild.h"
+ 
++#include "mozilla/dom/CredentialContainerBinding.h"
++#include "mozilla/dom/PasswordCredential.h"
++
+ #if defined(MOZ_CONTENT_SANDBOX)
+ #if defined(XP_WIN)
+ #define TARGET_SANDBOX_EXPORTS
+ #include "mozilla/sandboxTarget.h"
+ #elif defined(XP_LINUX)
+ #include "mozilla/Sandbox.h"
+ #include "mozilla/SandboxInfo.h"
+ #elif defined(XP_MACOSX)
+@@ -2278,16 +2281,39 @@ ContentChild::AddRemoteAlertObserver(con
+                                      nsIObserver* aObserver)
+ {
+   NS_ASSERTION(aObserver, "Adding a null observer?");
+   mAlertObservers.AppendElement(new AlertObserver(aObserver, aData));
+   return NS_OK;
+ }
+ 
+ 
++bool 
++ContentChild::RecvLoginsForPath(const uint64_t& aGetterId,
++                                const nsString& aPrepath,
++                                const nsString& aUsername,
++                                const nsString& aPassword)
++{
++  RefPtr<Promise> p = dont_AddRef(reinterpret_cast<Promise*>(aGetterId));
++  nsAutoString pcJson;
++  pcJson.AssignLiteral("{\"username\":\"");
++  pcJson.Append(aUsername);
++  pcJson.AppendLiteral("\",\"password\":\"");
++  pcJson.Append(aPassword);
++  pcJson.AppendLiteral("\"}");
++
++  PasswordCredentialData pcd;
++  pcd.Init(pcJson);
++
++  // FIXME refcounting? where is this freed?
++  RefPtr<PasswordCredential> pc = new PasswordCredential(p->GetParentObject(), pcd);
++  p->MaybeResolve(pc);
++  return true;
++}
++
+ bool
+ ContentChild::RecvSystemMemoryAvailable(const uint64_t& aGetterId,
+                                         const uint32_t& aMemoryAvailable)
+ {
+   RefPtr<Promise> p = dont_AddRef(reinterpret_cast<Promise*>(aGetterId));
+ 
+   if (!aMemoryAvailable) {
+     p->MaybeReject(NS_ERROR_NOT_AVAILABLE);
