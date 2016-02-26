@@ -10,11 +10,9 @@ echo "dom/base/Navigator.h"
 echo "dom/base/Navigator.cpp"
 (cd ../firefox && hg diff -U8 dom/base/Navigator.cpp > /tmp/Navigator.cpp.patch && diff /tmp/Navigator.cpp.patch ../W3Credentials/Navigator.cpp.patch)
 echo "dom/ipc/ContentChild"
-(cd ../firefox && hg diff -U8 dom/ipc/ContentChild.cpp > /tmp/ContentChild.cpp-patch && diff /tmp/ContentChild.cpp-patch
-../W3Credentials/ContentChild.cpp-patch)
+(cd ../firefox && hg diff -U8 dom/ipc/ContentChild.cpp > /tmp/ContentChild.cpp-patch && diff /tmp/ContentChild.cpp-patch ../W3Credentials/ContentChild.cpp-patch)
 echo "dom/ipc/ContentChild.h"
-(cd ../firefox && hg diff -U8 dom/ipc/ContentChild.h > /tmp/ContentChild.h-patch && diff /tmp/ContentChild.h-patch
-../W3Credentials/ContentChild.h-patch)
+(cd ../firefox && hg diff -U8 dom/ipc/ContentChild.h > /tmp/ContentChild.h-patch && diff /tmp/ContentChild.h-patch ../W3Credentials/ContentChild.h-patch)
 echo "dom/ipc/ContentParent.cpp"
 (cd ../firefox && hg diff -U8 dom/ipc/ContentParent.cpp > /tmp/ContentParent.cpp-patch && diff /tmp/ContentParent.cpp-patch ../W3Credentials/ContentParent.cpp-patch)
 echo "dom/ipc/ContentParent.h"

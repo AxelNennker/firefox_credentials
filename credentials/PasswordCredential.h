@@ -39,7 +39,7 @@ namespace dom {
 
 class PasswordCredential final : public OriginBoundCredential
 {
-  FormDataOrURLSearchParams mAdditionalData;
+  Nullable<FormDataOrURLSearchParams> mAdditionalData;
 
 public:
   NS_DECL_ISUPPORTS_INHERITED
@@ -54,8 +54,6 @@ protected:
   nsString mPassword;
   nsString mPasswordName;
   nsString mIdName;
-  FormData *mFormData;
-  URLSearchParams *mURLSearchParams;
 public:
 #if 0
     virtual bool WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector) override;
@@ -76,15 +74,8 @@ public:
   void SetPasswordName(const nsAString& aPasswordName) { mPasswordName = aPasswordName; };
 
   void GetAdditionalData(Nullable<OwningFormDataOrURLSearchParams>& aRetVal) const {
-    if (mFormData) {
-      aRetVal.SetValue().SetAsFormData() = *mFormData;
-    } else {
-      if (mURLSearchParams) {
-        aRetVal.SetValue().SetAsURLSearchParams() = *mURLSearchParams;
-      } else {
-        aRetVal.SetNull();
-      }
-    }
+    // FIXME
+    aRetVal.SetNull();
   }
 
   void SetAdditionalData(const Nullable<FormDataOrURLSearchParams>& arg);

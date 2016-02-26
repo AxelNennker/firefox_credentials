@@ -83,14 +83,15 @@ CredentialContainer::Get(
 
     // Tell the parent process to get login credentials via PContent
 
+#ifdef __AXEL_IPC__
     nsString prepath = NS_LITERAL_STRING("boink");    // FIXME
     ContentChild* cc = ContentChild::GetSingleton();
     RefPtr<Promise> ipcRef(p);
     cc->SendFindLogins(reinterpret_cast<uint64_t>(ipcRef.forget().take()), prepath);
-    /*
+#else
     PasswordCredentialData data;
-    nsString username;
-    nsString password;
+    nsString username  = NS_LITERAL_STRING("20 an username");
+    nsString password  = NS_LITERAL_STRING("40 an password");
     data.mIconURL.Construct();
     data.mIconURL.Value() = NS_LITERAL_STRING("30 an iconurl");
     data.mId.Construct();
@@ -101,7 +102,8 @@ CredentialContainer::Get(
     data.mName.Value() = username;
     PasswordCredential* passwordCredential = new PasswordCredential(go, data);
     p->MaybeResolve(passwordCredential);
-    */
+#endif
+
     return p.forget();
   } else {
     return nullptr;
