@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 --- a/dom/ipc/ContentParent.cpp
 +++ b/dom/ipc/ContentParent.cpp
-@@ -184,16 +184,18 @@
+@@ -184,16 +184,19 @@
  #include "mozilla/dom/ipc/StructuredCloneData.h"
  #include "mozilla/psm/PSMContentListener.h"
  #include "nsPluginHost.h"
@@ -10,6 +10,7 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  
  #include "nsIBidiKeyboard.h"
  
++#include "nsILoginInfo.h"
 +#include "nsILoginManager.h"
 +
  #ifdef MOZ_WEBRTC
@@ -20,7 +21,7 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  #include "nsSystemInfo.h"
  #endif
  
-@@ -3031,16 +3033,43 @@ ContentParent::RecvAudioChannelServiceSt
+@@ -3031,16 +3034,48 @@ ContentParent::RecvAudioChannelServiceSt
    MOZ_ASSERT(service);
  
    service->ChildStatusReceived(mChildID, aTelephonyChannel,
@@ -31,27 +32,32 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  bool
 +ContentParent::RecvFindLogins(const uint64_t& aGetterId, const nsString& aPrepath)
 +{
-+  /*nsCOMPtr<nsILoginManager> loginmanager = do_GetService("@mozilla.org/login-manager;1");*/
-+  /*
++  nsCOMPtr<nsILoginManager> loginmanager = do_GetService("@mozilla.org/login-manager;1");
 +  nsILoginInfo** loginInfos;
-+  nsAString httpRealm(prepath);
-+  nsAString actionUrl("");
++  nsAutoString httpRealm;
++  httpRealm.Assign(aPrepath);
++  nsAutoString actionUrl;
++  actionUrl.AssignLiteral("");
++  nsAutoString hostname;
++  hostname.AssignLiteral("{}");
 +  unsigned int count;
-+  //const nsAString& hostname("{}");
-+  loginmanager->FindLogins(&count, "{}", actionUrl, httpRealm, &loginInfos);
-+  nsILoginInfo* loginInfo = loginInfos[0];
-+  if (loginInfo) {
-+    nsAString password;
-+    nsAString username;
-+    loginInfo->GetUsername(username);
-+    loginInfo->GetPassword(password);
-+    *aUsername.Assign(username);
-+    *aPassword.Assign(password);
++  loginmanager->FindLogins(&count, hostname, actionUrl, httpRealm, &loginInfos);
++  nsAutoString password;
++  nsAutoString username;
++  if (loginInfos != nullptr) {
++    nsILoginInfo* loginInfo = loginInfos[0];
++    if (loginInfo) {
++      loginInfo->GetUsername(username);
++      loginInfo->GetPassword(password);
++    } else {
++      username.AssignLiteral("");
++      password.AssignLiteral("");
++    }
++  } else {
++    username.AssignLiteral("");
++    password.AssignLiteral("");
 +  }
-+  */
-+  nsString username = NS_LITERAL_STRING("username");
-+  nsString password = NS_LITERAL_STRING("password");
-+  SendLoginsForPath(aGetterId, aPrepath, username, password);
++  Unused << SendLoginsForPath(aGetterId, aPrepath, username, password);
 +  return true;
 +}
 +
