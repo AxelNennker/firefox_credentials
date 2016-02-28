@@ -1,17 +1,14 @@
 diff --git a/dom/ipc/ContentParent.h b/dom/ipc/ContentParent.h
 --- a/dom/ipc/ContentParent.h
 +++ b/dom/ipc/ContentParent.h
-@@ -501,17 +501,21 @@ public:
-                                 const nsString& aName,
-                                 const nsCString& aFeatures,
-                                 const nsCString& aBaseURI,
+@@ -505,16 +505,18 @@ public:
                                  nsresult* aResult,
                                  bool* aWindowIsNew,
                                  InfallibleTArray<FrameScriptInfo>* aFrameScripts,
                                  nsCString* aURLToLoad) override;
  
-+  // void SendLoginsForPath(const uint64_t& getterId, nsString prepath, nsString username, nsString password);
-+
+   static bool AllocateLayerTreeId(TabParent* aTabParent, uint64_t* aId);
+ 
  protected:
 +  virtual bool RecvFindLogins(const uint64_t& getterId, const nsString& prepath) override;
 +

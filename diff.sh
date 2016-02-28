@@ -9,7 +9,7 @@ echo "dom/base/Navigator.h"
 (cd ../firefox && hg diff -U8 dom/base/Navigator.h > /tmp/Navigator.h.patch && diff /tmp/Navigator.h.patch ../W3Credentials/Navigator.h.patch)
 echo "dom/base/Navigator.cpp"
 (cd ../firefox && hg diff -U8 dom/base/Navigator.cpp > /tmp/Navigator.cpp.patch && diff /tmp/Navigator.cpp.patch ../W3Credentials/Navigator.cpp.patch)
-echo "dom/ipc/ContentChild"
+echo "dom/ipc/ContentChild.cpp"
 (cd ../firefox && hg diff -U8 dom/ipc/ContentChild.cpp > /tmp/ContentChild.cpp-patch && diff /tmp/ContentChild.cpp-patch ../W3Credentials/ContentChild.cpp-patch)
 echo "dom/ipc/ContentChild.h"
 (cd ../firefox && hg diff -U8 dom/ipc/ContentChild.h > /tmp/ContentChild.h-patch && diff /tmp/ContentChild.h-patch ../W3Credentials/ContentChild.h-patch)

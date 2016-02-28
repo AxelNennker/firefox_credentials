@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/ContentChild.h b/dom/ipc/ContentChild.h
 --- a/dom/ipc/ContentChild.h
 +++ b/dom/ipc/ContentChild.h
-@@ -399,16 +399,23 @@ public:
+@@ -404,16 +404,23 @@ public:
  
    virtual bool RecvBidiKeyboardNotify(const bool& isLangRTL) override;
  

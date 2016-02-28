@@ -47,7 +47,7 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
      },
      'implicitJSContext': [ 'respondWith' ],
  },
-@@ -706,16 +718,21 @@ DOMInterfaces = {
+@@ -670,16 +682,21 @@ DOMInterfaces = {
      'concrete': False
  },
  
@@ -69,7 +69,7 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
  'Location': {
      'nativeType': 'nsLocation',
  },
-@@ -901,16 +918,20 @@ DOMInterfaces = {
+@@ -865,16 +882,20 @@ DOMInterfaces = {
  'OfflineResourceList': {
      'nativeType': 'nsDOMOfflineResourceList',
  },

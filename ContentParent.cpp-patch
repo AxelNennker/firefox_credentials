@@ -1,12 +1,12 @@
 diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 --- a/dom/ipc/ContentParent.cpp
 +++ b/dom/ipc/ContentParent.cpp
-@@ -184,16 +184,19 @@
- #include "mozilla/dom/ipc/StructuredCloneData.h"
- #include "mozilla/psm/PSMContentListener.h"
+@@ -185,16 +185,19 @@
  #include "nsPluginHost.h"
  #include "nsPluginTags.h"
  #include "nsIBlocklistService.h"
+ #include "mozilla/StyleSheetHandle.h"
+ #include "mozilla/StyleSheetHandleInlines.h"
  
  #include "nsIBidiKeyboard.h"
  
@@ -21,7 +21,7 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  #include "nsSystemInfo.h"
  #endif
  
-@@ -3031,16 +3034,48 @@ ContentParent::RecvAudioChannelServiceSt
+@@ -2928,16 +2931,48 @@ ContentParent::RecvAudioChannelServiceSt
    MOZ_ASSERT(service);
  
    service->ChildStatusReceived(mChildID, aTelephonyChannel,

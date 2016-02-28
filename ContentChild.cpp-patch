@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/ContentChild.cpp b/dom/ipc/ContentChild.cpp
 --- a/dom/ipc/ContentChild.cpp
 +++ b/dom/ipc/ContentChild.cpp
-@@ -52,16 +52,19 @@
+@@ -53,16 +53,19 @@
  #include "mozilla/net/NeckoChild.h"
  #include "mozilla/plugins/PluginInstanceParent.h"
  #include "mozilla/plugins/PluginModuleParent.h"
@@ -21,7 +21,7 @@ diff --git a/dom/ipc/ContentChild.cpp b/dom/ipc/ContentChild.cpp
  #include "mozilla/Sandbox.h"
  #include "mozilla/SandboxInfo.h"
  #elif defined(XP_MACOSX)
-@@ -2278,16 +2281,39 @@ ContentChild::AddRemoteAlertObserver(con
+@@ -2303,16 +2306,39 @@ ContentChild::AddRemoteAlertObserver(con
                                       nsIObserver* aObserver)
  {
    NS_ASSERTION(aObserver, "Adding a null observer?");
