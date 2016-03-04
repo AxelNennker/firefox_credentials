@@ -21,7 +21,7 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  #include "nsSystemInfo.h"
  #endif
  
-@@ -2928,16 +2931,48 @@ ContentParent::RecvAudioChannelServiceSt
+@@ -2928,16 +2931,68 @@ ContentParent::RecvAudioChannelServiceSt
    MOZ_ASSERT(service);
  
    service->ChildStatusReceived(mChildID, aTelephonyChannel,
@@ -34,29 +34,49 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 +{
 +  nsCOMPtr<nsILoginManager> loginmanager = do_GetService("@mozilla.org/login-manager;1");
 +  nsILoginInfo** loginInfos;
++
 +  nsAutoString httpRealm;
-+  httpRealm.Assign(aPrepath);
++  httpRealm.AssignLiteral("");
 +  nsAutoString actionUrl;
 +  actionUrl.AssignLiteral("");
 +  nsAutoString hostname;
-+  hostname.AssignLiteral("{}");
++  hostname.Assign(aPrepath);
 +  unsigned int count;
-+  loginmanager->FindLogins(&count, hostname, actionUrl, httpRealm, &loginInfos);
++
 +  nsAutoString password;
 +  nsAutoString username;
-+  if (loginInfos != nullptr) {
++
++#ifdef AXEL_GETALLLOGINS
++  loginmanager->GetAllLogins(&count, &loginInfos);
++  if (count > 0 && loginInfos != nullptr) {
++    nsILoginInfo* loginInfo = loginInfos[0];
++    if (loginInfos != nullptr) {
++      nsILoginInfo* loginInfo = loginInfos[0];
++      if (loginInfo) {
++        loginInfo->GetUsername(username);
++        loginInfo->GetPassword(password);
++      } else {
++        username.AssignLiteral("u1");
++        password.AssignLiteral("p1");
++      }
++    } else {
++      username.AssignLiteral("u2");
++      password.AssignLiteral("p2");
++    }
++  } else {
++#endif
++    loginmanager->FindLogins(&count, hostname, actionUrl, httpRealm, &loginInfos);
 +    nsILoginInfo* loginInfo = loginInfos[0];
 +    if (loginInfo) {
 +      loginInfo->GetUsername(username);
 +      loginInfo->GetPassword(password);
 +    } else {
-+      username.AssignLiteral("");
-+      password.AssignLiteral("");
++      username.AssignLiteral("u3");
++      password.AssignLiteral("p3");
 +    }
-+  } else {
-+    username.AssignLiteral("");
-+    password.AssignLiteral("");
++#ifdef AXEL_GETALLLOGINS
 +  }
++#endif
 +  Unused << SendLoginsForPath(aGetterId, aPrepath, username, password);
 +  return true;
 +}

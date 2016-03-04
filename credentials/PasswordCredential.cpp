@@ -30,6 +30,14 @@ PasswordCredential::~PasswordCredential()
 {
 }
 
+PasswordCredential::PasswordCredential(nsIGlobalObject* aGlobal, 
+  const nsString& aUsername, const nsString& aPassword)
+  : OriginBoundCredential(aGlobal, aUsername)
+{
+  mType.AssignLiteral("password");
+  mPassword = aPassword;
+}
+
 PasswordCredential::PasswordCredential(nsIGlobalObject* aGlobal, const PasswordCredentialData& data)
   : OriginBoundCredential(aGlobal, data)
 {

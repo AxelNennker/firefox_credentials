@@ -49,6 +49,7 @@ public:
 public:
   Credential();
   Credential(nsIGlobalObject* aGlobal, const CredentialData& data);
+  Credential(nsIGlobalObject* aGlobal, const nsString aId);
 
 protected:
   virtual ~Credential();

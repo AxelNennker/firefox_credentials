@@ -21,7 +21,7 @@ diff --git a/dom/ipc/ContentChild.cpp b/dom/ipc/ContentChild.cpp
  #include "mozilla/Sandbox.h"
  #include "mozilla/SandboxInfo.h"
  #elif defined(XP_MACOSX)
-@@ -2303,16 +2306,39 @@ ContentChild::AddRemoteAlertObserver(con
+@@ -2303,16 +2306,29 @@ ContentChild::AddRemoteAlertObserver(con
                                       nsIObserver* aObserver)
  {
    NS_ASSERTION(aObserver, "Adding a null observer?");
@@ -37,18 +37,8 @@ diff --git a/dom/ipc/ContentChild.cpp b/dom/ipc/ContentChild.cpp
 +                                const nsString& aPassword)
 +{
 +  RefPtr<Promise> p = dont_AddRef(reinterpret_cast<Promise*>(aGetterId));
-+  nsAutoString pcJson;
-+  pcJson.AssignLiteral("{\"username\":\"");
-+  pcJson.Append(aUsername);
-+  pcJson.AppendLiteral("\",\"password\":\"");
-+  pcJson.Append(aPassword);
-+  pcJson.AppendLiteral("\"}");
 +
-+  PasswordCredentialData pcd;
-+  pcd.Init(pcJson);
-+
-+  // FIXME refcounting? where is this freed?
-+  RefPtr<PasswordCredential> pc = new PasswordCredential(p->GetParentObject(), pcd);
++  RefPtr<PasswordCredential> pc = new PasswordCredential(p->GetParentObject(), aUsername, aPassword);
 +  p->MaybeResolve(pc);
 +  return true;
 +}

@@ -26,6 +26,7 @@ public:
 public:
   OriginBoundCredential();
   OriginBoundCredential(nsIGlobalObject* aGlobal, const OriginBoundCredentialData& data);
+  OriginBoundCredential(nsIGlobalObject* aGlobal, const nsString& aId);
 
 protected:
   ~OriginBoundCredential();

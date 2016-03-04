@@ -84,7 +84,7 @@ CredentialContainer::Get(
     // Tell the parent process to get login credentials via PContent
 
 #ifndef __AXEL_IPC__
-    nsString prepath = NS_LITERAL_STRING("boink");    // FIXME
+    nsString prepath = NS_LITERAL_STRING("https://dateimanager.fc-host48.de");    // FIXME
     ContentChild* cc = ContentChild::GetSingleton();
     RefPtr<Promise> ipcRef(p);
     cc->SendFindLogins(reinterpret_cast<uint64_t>(ipcRef.forget().take()), prepath);

@@ -46,6 +46,9 @@ public:
 
   PasswordCredential();
   PasswordCredential(nsIGlobalObject* aGlobal, const PasswordCredentialData& data);
+  PasswordCredential(nsIGlobalObject* aGlobal, 
+    const nsString& aUsername, 
+    const nsString& aPassword);
 
   NS_DECLARE_STATIC_IID_ACCESSOR(PASSWORDCREDENTIAL_IID)
 

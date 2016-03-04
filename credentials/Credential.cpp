@@ -36,6 +36,13 @@ Credential::WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto)
   return CredentialBinding::Wrap(aCx, this, aGivenProto);
 }
 
+Credential::Credential(nsIGlobalObject* aGlobal, const nsString aId)
+{
+  mGlobal = aGlobal;
+  mId = aId;
+  // assigned in constructor of derived type: mType = aType;
+}
+
 Credential::Credential(nsIGlobalObject* aGlobal, const CredentialData& data)
 {
   mGlobal = aGlobal;

@@ -28,6 +28,13 @@ OriginBoundCredential::~OriginBoundCredential()
     // Add |MOZ_COUNT_DTOR(OriginBoundCredential);| for a non-refcounted object.
 }
 
+OriginBoundCredential::OriginBoundCredential(nsIGlobalObject* aGlobal, const nsString& aId)
+  : Credential(aGlobal, aId)
+{
+  mName.AssignLiteral("");
+  mIconURL.AssignLiteral("");
+}
+
 OriginBoundCredential::OriginBoundCredential(nsIGlobalObject* aGlobal, const OriginBoundCredentialData& data)
   : Credential(aGlobal, data)
 {
@@ -35,11 +42,13 @@ OriginBoundCredential::OriginBoundCredential(nsIGlobalObject* aGlobal, const Ori
     mName = data.mName.Value();
   } else {
     // FIXME throw if not passed???
+    mName.AssignLiteral("");
   }
   if (data.mIconURL.WasPassed()) {
     mIconURL = data.mIconURL.Value();
   } else {
     // FIXME throw if not passed???
+    mIconURL.AssignLiteral("");
   }
 }
 
