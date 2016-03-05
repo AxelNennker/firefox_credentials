@@ -21,7 +21,7 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  #include "nsSystemInfo.h"
  #endif
  
-@@ -2928,16 +2931,68 @@ ContentParent::RecvAudioChannelServiceSt
+@@ -2928,16 +2931,71 @@ ContentParent::RecvAudioChannelServiceSt
    MOZ_ASSERT(service);
  
    service->ChildStatusReceived(mChildID, aTelephonyChannel,
@@ -39,8 +39,6 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 +  httpRealm.AssignLiteral("");
 +  nsAutoString actionUrl;
 +  actionUrl.AssignLiteral("");
-+  nsAutoString hostname;
-+  hostname.Assign(aPrepath);
 +  unsigned int count;
 +
 +  nsAutoString password;
@@ -65,14 +63,19 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 +    }
 +  } else {
 +#endif
-+    loginmanager->FindLogins(&count, hostname, actionUrl, httpRealm, &loginInfos);
-+    nsILoginInfo* loginInfo = loginInfos[0];
-+    if (loginInfo) {
-+      loginInfo->GetUsername(username);
-+      loginInfo->GetPassword(password);
++    loginmanager->FindLogins(&count, aPrepath, actionUrl, httpRealm, &loginInfos);
++    if ((count > 0) && (loginInfos != nullptr)) {
++      nsILoginInfo* loginInfo = loginInfos[0];
++      if (loginInfo) {
++        loginInfo->GetUsername(username);
++        loginInfo->GetPassword(password);
++      } else {
++        username.AssignLiteral("u3");
++        password.AssignLiteral("p3");
++      }
 +    } else {
-+      username.AssignLiteral("u3");
-+      password.AssignLiteral("p3");
++      username.AssignLiteral("");
++      password.AssignLiteral("");
 +    }
 +#ifdef AXEL_GETALLLOGINS
 +  }

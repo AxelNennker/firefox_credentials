@@ -12,6 +12,7 @@
 #include "nsCOMPtr.h"
 #include "MainThreadUtils.h"
 #include "nsXULAppAPI.h"
+#include "nsIDOMLocation.h"
 
 
 #include "mozilla/dom/PasswordCredential.h"
@@ -83,27 +84,18 @@ CredentialContainer::Get(
 
     // Tell the parent process to get login credentials via PContent
 
-#ifndef __AXEL_IPC__
-    nsString prepath = NS_LITERAL_STRING("https://dateimanager.fc-host48.de");    // FIXME
-    ContentChild* cc = ContentChild::GetSingleton();
-    RefPtr<Promise> ipcRef(p);
-    cc->SendFindLogins(reinterpret_cast<uint64_t>(ipcRef.forget().take()), prepath);
-#else
-    PasswordCredentialData data;
-    nsString username  = NS_LITERAL_STRING("20 an username");
-    nsString password  = NS_LITERAL_STRING("40 an password");
-    data.mIconURL.Construct();
-    data.mIconURL.Value() = NS_LITERAL_STRING("30 an iconurl");
-    data.mId.Construct();
-    data.mId.Value() = NS_LITERAL_STRING("10 an id");
-    data.mPassword.Construct();
-    data.mPassword.Value() = password;
-    data.mName.Construct();
-    data.mName.Value() = username;
-    PasswordCredential* passwordCredential = new PasswordCredential(go, data);
-    p->MaybeResolve(passwordCredential);
-#endif
-
+    // nsString prepath = NS_LITERAL_STRING("https://dateimanager.fc-host48.de");
+    nsIDOMLocation* location = mWindow->GetLocation();
+    if (location) {
+      // FIXME check secure transport
+      nsAutoString origin;
+      location->GetOrigin(origin);
+      ContentChild* cc = ContentChild::GetSingleton();
+      RefPtr<Promise> ipcRef(p);
+      cc->SendFindLogins(reinterpret_cast<uint64_t>(ipcRef.forget().take()), origin);
+    } else {
+      return nullptr;
+    }
     return p.forget();
   } else {
     return nullptr;
