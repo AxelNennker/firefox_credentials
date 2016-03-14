@@ -94,24 +94,5 @@ FederatedCredential::Constructor(const GlobalObject& aGlobal,
   return ret.forget();
 }
 
-static // Return a raw pointer here to avoid refcounting, but make sure it's safe (the object should be kept alive by the callee).
-already_AddRefed<Promise> 
-RegisterAsProvider(const GlobalObject& aGlobal, const nsAString& protocol)
-{
-  ErrorResult result;
-  nsCOMPtr<nsIGlobalObject> global = do_QueryInterface(aGlobal.GetAsSupports());
-  if (!global) {
-    result.Throw(NS_ERROR_UNEXPECTED);
-    return nullptr;
-  }
-  RefPtr<Promise> p = Promise::Create(global, result);
-  if (result.Failed()) {
-    result.Throw(NS_ERROR_UNEXPECTED);
-    return nullptr;
-  }
-  // FIXME not implemennted
-  return p.forget();
-}
-
 } // namespace dom
 } // namespace mozilla

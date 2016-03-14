@@ -54,8 +54,6 @@ public:
 
   void GetProtocol(nsString& aRetVal) const { aRetVal = mProtocol; }
 
-  static // Return a raw pointer here to avoid refcounting, but make sure it's safe (the object should be kept alive by the callee).
-  already_AddRefed<Promise> RegisterAsProvider(const GlobalObject& global, const nsAString& protocol);
 };
 
 NS_DEFINE_STATIC_IID_ACCESSOR(FederatedCredential, FEDERATEDCREDENTIAL_IID)
