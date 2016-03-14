@@ -16,11 +16,11 @@ namespace mozilla {
 namespace dom {
 
 // Only needed for refcounted objects.
-NS_IMPL_ADDREF_INHERITED(PasswordCredential, OriginBoundCredential)
-NS_IMPL_RELEASE_INHERITED(PasswordCredential, OriginBoundCredential)
+NS_IMPL_ADDREF_INHERITED(PasswordCredential, SiteBoundCredential)
+NS_IMPL_RELEASE_INHERITED(PasswordCredential, SiteBoundCredential)
 
 NS_INTERFACE_MAP_BEGIN(PasswordCredential)
-NS_INTERFACE_MAP_END_INHERITING(OriginBoundCredential)
+NS_INTERFACE_MAP_END_INHERITING(SiteBoundCredential)
 
 PasswordCredential::PasswordCredential()
 {
@@ -32,14 +32,14 @@ PasswordCredential::~PasswordCredential()
 
 PasswordCredential::PasswordCredential(nsIGlobalObject* aGlobal, 
   const nsString& aUsername, const nsString& aPassword)
-  : OriginBoundCredential(aGlobal, aUsername)
+  : SiteBoundCredential(aGlobal, aUsername)
 {
   mType.AssignLiteral("password");
   mPassword = aPassword;
 }
 
 PasswordCredential::PasswordCredential(nsIGlobalObject* aGlobal, const PasswordCredentialData& data)
-  : OriginBoundCredential(aGlobal, data)
+  : SiteBoundCredential(aGlobal, data)
 {
   mType.AssignLiteral("password");
   if (data.mPassword.WasPassed()) {

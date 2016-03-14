@@ -11,7 +11,7 @@
 #include "mozilla/ErrorResult.h"
 #include "nsCycleCollectionParticipant.h"
 
-#include "mozilla/dom/OriginBoundCredential.h"
+#include "mozilla/dom/SiteBoundCredential.h"
 
 #include "Promise.h"
 
@@ -24,7 +24,7 @@ namespace dom {
 { 0xec9fef4b, 0x8c3b, 0x9fd7, \
  { 0xec, 0x03, 0xd4, 0xc2, 0x59, 0xa1, 0xe1, 0x88 } }
 
-class FederatedCredential : public OriginBoundCredential
+class FederatedCredential : public SiteBoundCredential
 {
 public:
   NS_DECL_ISUPPORTS_INHERITED

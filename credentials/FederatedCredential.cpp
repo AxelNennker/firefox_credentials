@@ -7,7 +7,7 @@
 #include "mozilla/dom/FederatedCredential.h"
 
 #include "mozilla/dom/CredentialContainerBinding.h"
-#include "mozilla/dom/OriginBoundCredential.h"
+#include "mozilla/dom/SiteBoundCredential.h"
 
 #include "nsWrapperCache.h"
 
@@ -15,11 +15,11 @@ namespace mozilla {
 namespace dom {
 
 
-NS_IMPL_ADDREF_INHERITED(FederatedCredential, OriginBoundCredential)
-NS_IMPL_RELEASE_INHERITED(FederatedCredential, OriginBoundCredential)
+NS_IMPL_ADDREF_INHERITED(FederatedCredential, SiteBoundCredential)
+NS_IMPL_RELEASE_INHERITED(FederatedCredential, SiteBoundCredential)
 
 NS_INTERFACE_MAP_BEGIN(FederatedCredential)
-NS_INTERFACE_MAP_END_INHERITING(OriginBoundCredential)
+NS_INTERFACE_MAP_END_INHERITING(SiteBoundCredential)
 
 #if 0
 bool

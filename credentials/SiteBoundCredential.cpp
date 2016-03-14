@@ -5,37 +5,37 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #include "mozilla/dom/CredentialContainerBinding.h"
-#include "mozilla/dom/OriginBoundCredential.h"
+#include "mozilla/dom/SiteBoundCredential.h"
 #include "mozilla/dom/Credential.h"
 
 namespace mozilla {
 namespace dom {
 
-NS_IMPL_ADDREF_INHERITED(OriginBoundCredential, Credential)
-NS_IMPL_RELEASE_INHERITED(OriginBoundCredential, Credential)
+NS_IMPL_ADDREF_INHERITED(SiteBoundCredential, Credential)
+NS_IMPL_RELEASE_INHERITED(SiteBoundCredential, Credential)
 
-NS_INTERFACE_MAP_BEGIN(OriginBoundCredential)
+NS_INTERFACE_MAP_BEGIN(SiteBoundCredential)
 NS_INTERFACE_MAP_END_INHERITING(Credential)
 
 
-OriginBoundCredential::OriginBoundCredential()
+SiteBoundCredential::SiteBoundCredential()
 {
-    // Add |MOZ_COUNT_CTOR(OriginBoundCredential);| for a non-refcounted object.
+    // Add |MOZ_COUNT_CTOR(SiteBoundCredential);| for a non-refcounted object.
 }
 
-OriginBoundCredential::~OriginBoundCredential()
+SiteBoundCredential::~SiteBoundCredential()
 {
-    // Add |MOZ_COUNT_DTOR(OriginBoundCredential);| for a non-refcounted object.
+    // Add |MOZ_COUNT_DTOR(SiteBoundCredential);| for a non-refcounted object.
 }
 
-OriginBoundCredential::OriginBoundCredential(nsIGlobalObject* aGlobal, const nsString& aId)
+SiteBoundCredential::SiteBoundCredential(nsIGlobalObject* aGlobal, const nsString& aId)
   : Credential(aGlobal, aId)
 {
   mName.AssignLiteral("");
   mIconURL.AssignLiteral("");
 }
 
-OriginBoundCredential::OriginBoundCredential(nsIGlobalObject* aGlobal, const OriginBoundCredentialData& data)
+SiteBoundCredential::SiteBoundCredential(nsIGlobalObject* aGlobal, const SiteBoundCredentialData& data)
   : Credential(aGlobal, data)
 {
   if (data.mName.WasPassed()) {

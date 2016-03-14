@@ -7,37 +7,37 @@ interface Credential {
   readonly attribute DOMString type;
 };
 
-dictionary OriginBoundCredentialData : CredentialData {
+dictionary SiteBoundCredentialData : CredentialData {
   USVString name;
   USVString iconURL;
 };
 
-interface OriginBoundCredential : Credential {
+interface SiteBoundCredential : Credential {
   readonly attribute USVString name;
   readonly attribute USVString iconURL;
 };
 
-dictionary PasswordCredentialData : OriginBoundCredentialData {
+dictionary PasswordCredentialData : SiteBoundCredentialData {
   USVString password;
 };
 
 typedef (FormData or URLSearchParams) CredentialBodyType;
 
 [Constructor(PasswordCredentialData data), Exposed=Window]
-interface PasswordCredential : OriginBoundCredential {
+interface PasswordCredential : SiteBoundCredential {
   attribute USVString idName;
   attribute USVString passwordName;
 
   attribute CredentialBodyType? additionalData;
 };
 
-dictionary FederatedCredentialData : OriginBoundCredentialData {
+dictionary FederatedCredentialData : SiteBoundCredentialData {
   USVString provider;
   DOMString protocol;
 };
 
 [Constructor(FederatedCredentialData data), Exposed=Window]
-interface FederatedCredential : OriginBoundCredential {
+interface FederatedCredential : SiteBoundCredential {
   readonly attribute USVString provider;
   readonly attribute DOMString? protocol;
 };

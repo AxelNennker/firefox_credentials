@@ -4,8 +4,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#ifndef mozilla_dom_OriginBoundCredential_h
-#define mozilla_dom_OriginBoundCredential_h
+#ifndef mozilla_dom_SiteBoundCredential_h
+#define mozilla_dom_SiteBoundCredential_h
 
 #include "mozilla/Attributes.h"
 #include "mozilla/ErrorResult.h"
@@ -18,18 +18,18 @@ struct JSContext;
 namespace mozilla {
 namespace dom {
 
-class OriginBoundCredential : public Credential
+class SiteBoundCredential : public Credential
 {
 public:
   NS_DECL_ISUPPORTS_INHERITED
 
 public:
-  OriginBoundCredential();
-  OriginBoundCredential(nsIGlobalObject* aGlobal, const OriginBoundCredentialData& data);
-  OriginBoundCredential(nsIGlobalObject* aGlobal, const nsString& aId);
+  SiteBoundCredential();
+  SiteBoundCredential(nsIGlobalObject* aGlobal, const SiteBoundCredentialData& data);
+  SiteBoundCredential(nsIGlobalObject* aGlobal, const nsString& aId);
 
 protected:
-  ~OriginBoundCredential();
+  ~SiteBoundCredential();
   nsString mName;
   nsString mIconURL;
 
@@ -42,4 +42,4 @@ public:
 } // namespace dom
 } // namespace mozilla
 
-#endif // mozilla_dom_OriginBoundCredential_h
+#endif // mozilla_dom_SiteBoundCredential_h

@@ -25,7 +25,7 @@ struct PasswordCredentialData;
 #include "mozilla/Attributes.h"
 #include "mozilla/ErrorResult.h"
 
-#include "mozilla/dom/OriginBoundCredential.h"
+#include "mozilla/dom/SiteBoundCredential.h"
 
 struct JSContext;
 class nsIGlobalObject;
@@ -37,7 +37,7 @@ class nsIGlobalObject;
 namespace mozilla {
 namespace dom {
 
-class PasswordCredential final : public OriginBoundCredential
+class PasswordCredential final : public SiteBoundCredential
 {
   Nullable<FormDataOrURLSearchParams> mAdditionalData;
 
@@ -79,6 +79,8 @@ public:
   void SetPasswordName(const nsAString& aPasswordName) { mPasswordName = aPasswordName; };
 
   void GetAdditionalData(Nullable<OwningFormDataOrURLSearchParams>& aRetVal) const {
+    aRetVal = mOwningFormDataOrURLSearchParams;
+    /*
     if (mOwningFormDataOrURLSearchParams.IsNull()) {
       aRetVal.SetNull();
     } else {
@@ -88,6 +90,7 @@ public:
         aRetVal.Value().SetAsURLSearchParams() = mOwningFormDataOrURLSearchParams.Value().GetAsURLSearchParams();
       }
     }
+    */
   }
 
   void SetAdditionalData(const Nullable<FormDataOrURLSearchParams>& arg) {
