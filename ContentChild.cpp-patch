@@ -21,7 +21,7 @@ diff --git a/dom/ipc/ContentChild.cpp b/dom/ipc/ContentChild.cpp
  #include "mozilla/Sandbox.h"
  #include "mozilla/SandboxInfo.h"
  #elif defined(XP_MACOSX)
-@@ -2303,16 +2306,29 @@ ContentChild::AddRemoteAlertObserver(con
+@@ -2321,16 +2324,29 @@ ContentChild::AddRemoteAlertObserver(con
                                       nsIObserver* aObserver)
  {
    NS_ASSERTION(aObserver, "Adding a null observer?");

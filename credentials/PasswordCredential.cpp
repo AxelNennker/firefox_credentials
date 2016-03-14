@@ -159,10 +159,5 @@ PasswordCredential::Send(const nsAString& url)
   return FetchRequest(mGlobal, requestOrUSVString, requestInit, errorresult);
 }
 
-void PasswordCredential::SetAdditionalData(const Nullable<FormDataOrURLSearchParams>& arg)
-{
-  //mAdditionalData = arg;
-}
-
 } // namespace dom
 } // namespace mozilla

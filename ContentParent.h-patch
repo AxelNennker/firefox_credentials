@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/ContentParent.h b/dom/ipc/ContentParent.h
 --- a/dom/ipc/ContentParent.h
 +++ b/dom/ipc/ContentParent.h
-@@ -505,16 +505,18 @@ public:
+@@ -509,16 +509,18 @@ public:
                                  nsresult* aResult,
                                  bool* aWindowIsNew,
                                  InfallibleTArray<FrameScriptInfo>* aFrameScripts,

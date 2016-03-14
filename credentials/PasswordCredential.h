@@ -57,6 +57,8 @@ protected:
   nsString mPassword;
   nsString mPasswordName;
   nsString mIdName;
+
+  Nullable<OwningFormDataOrURLSearchParams> mOwningFormDataOrURLSearchParams;
 public:
 #if 0
     virtual bool WrapObject(JSContext* aCx, JS::Handle<JSObject*> aGivenProto, JS::MutableHandle<JSObject*> aReflector) override;
@@ -77,11 +79,28 @@ public:
   void SetPasswordName(const nsAString& aPasswordName) { mPasswordName = aPasswordName; };
 
   void GetAdditionalData(Nullable<OwningFormDataOrURLSearchParams>& aRetVal) const {
-    // FIXME
-    aRetVal.SetNull();
+    if (mOwningFormDataOrURLSearchParams.IsNull()) {
+      aRetVal.SetNull();
+    } else {
+      if (mOwningFormDataOrURLSearchParams.Value().IsFormData()) {
+        aRetVal.Value().SetAsFormData() = mOwningFormDataOrURLSearchParams.Value().GetAsFormData();
+      } else {
+        aRetVal.Value().SetAsURLSearchParams() = mOwningFormDataOrURLSearchParams.Value().GetAsURLSearchParams();
+      }
+    }
   }
 
-  void SetAdditionalData(const Nullable<FormDataOrURLSearchParams>& arg);
+  void SetAdditionalData(const Nullable<FormDataOrURLSearchParams>& arg) {
+    if (arg.IsNull()) {
+      mOwningFormDataOrURLSearchParams.SetNull();
+    } else {
+      if (arg.Value().IsFormData()) {
+        mOwningFormDataOrURLSearchParams.Value().SetAsFormData() = arg.Value().GetAsFormData();
+      } else {
+        mOwningFormDataOrURLSearchParams.Value().SetAsURLSearchParams() = arg.Value().GetAsURLSearchParams();
+      }
+    }
+  }
 
   // Return a raw pointer here to avoid refcounting, but make sure it's safe (the object should be kept alive by the callee).
   already_AddRefed<Promise> Send(const nsAString& url);

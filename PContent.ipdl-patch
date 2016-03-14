@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/PContent.ipdl b/dom/ipc/PContent.ipdl
 --- a/dom/ipc/PContent.ipdl
 +++ b/dom/ipc/PContent.ipdl
-@@ -743,17 +743,21 @@ child:
+@@ -737,17 +737,21 @@ child:
       */
      async PushWithData(nsCString scope, Principal principal, uint8_t[] data);
  

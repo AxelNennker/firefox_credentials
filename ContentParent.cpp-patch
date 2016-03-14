@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 --- a/dom/ipc/ContentParent.cpp
 +++ b/dom/ipc/ContentParent.cpp
-@@ -185,16 +185,19 @@
+@@ -186,16 +186,19 @@
  #include "nsPluginHost.h"
  #include "nsPluginTags.h"
  #include "nsIBlocklistService.h"
@@ -21,7 +21,7 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  #include "nsSystemInfo.h"
  #endif
  
-@@ -2928,16 +2931,71 @@ ContentParent::RecvAudioChannelServiceSt
+@@ -2937,16 +2940,71 @@ ContentParent::RecvAudioChannelServiceSt
    MOZ_ASSERT(service);
  
    service->ChildStatusReceived(mChildID, aTelephonyChannel,
