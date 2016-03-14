@@ -80,17 +80,6 @@ public:
 
   void GetAdditionalData(Nullable<OwningFormDataOrURLSearchParams>& aRetVal) const {
     aRetVal = mOwningFormDataOrURLSearchParams;
-    /*
-    if (mOwningFormDataOrURLSearchParams.IsNull()) {
-      aRetVal.SetNull();
-    } else {
-      if (mOwningFormDataOrURLSearchParams.Value().IsFormData()) {
-        aRetVal.Value().SetAsFormData() = mOwningFormDataOrURLSearchParams.Value().GetAsFormData();
-      } else {
-        aRetVal.Value().SetAsURLSearchParams() = mOwningFormDataOrURLSearchParams.Value().GetAsURLSearchParams();
-      }
-    }
-    */
   }
 
   void SetAdditionalData(const Nullable<FormDataOrURLSearchParams>& arg) {
