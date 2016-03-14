@@ -1,7 +1,7 @@
 diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
 --- a/dom/bindings/Bindings.conf
 +++ b/dom/bindings/Bindings.conf
-@@ -314,16 +314,24 @@ DOMInterfaces = {
+@@ -310,16 +310,24 @@ DOMInterfaces = {
  'ConvolverNode': {
      'implicitJSContext': [ 'buffer' ],
  },
@@ -26,7 +26,7 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
      'concrete': False,
  },
  
-@@ -490,16 +498,20 @@ DOMInterfaces = {
+@@ -486,16 +494,20 @@ DOMInterfaces = {
      'implicitJSContext': [ 'waitUntil' ],
  },
  
@@ -47,7 +47,7 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
      },
      'implicitJSContext': [ 'respondWith' ],
  },
-@@ -670,16 +682,21 @@ DOMInterfaces = {
+@@ -666,16 +678,21 @@ DOMInterfaces = {
      'concrete': False
  },
  
@@ -69,7 +69,7 @@ diff --git a/dom/bindings/Bindings.conf b/dom/bindings/Bindings.conf
  'Location': {
      'nativeType': 'nsLocation',
  },
-@@ -865,16 +882,20 @@ DOMInterfaces = {
+@@ -861,16 +878,20 @@ DOMInterfaces = {
  'OfflineResourceList': {
      'nativeType': 'nsDOMOfflineResourceList',
  },

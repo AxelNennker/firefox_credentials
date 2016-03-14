@@ -1,18 +1,20 @@
 diff --git a/dom/ipc/PContent.ipdl b/dom/ipc/PContent.ipdl
 --- a/dom/ipc/PContent.ipdl
 +++ b/dom/ipc/PContent.ipdl
-@@ -737,17 +737,21 @@ child:
-      */
-     async PushWithData(nsCString scope, Principal principal, uint8_t[] data);
+@@ -744,17 +744,22 @@ child:
  
      /**
-      * Send a `pushsubscriptionchange` event to a service worker in the child.
+      * Windows specific: associate this content process with the browsers
+      * audio session.
       */
-     async PushSubscriptionChange(nsCString scope, Principal principal);
- 
+     async SetAudioSessionData(nsID aID,
+                               nsString aDisplayName,
+                               nsString aIconPath);
+-parent:
++    
 +    async LoginsForPath(uint64_t getterId, nsString prepath, nsString username, nsString password);
 +
- parent:
++ parent:
 +    async FindLogins(uint64_t getterId, nsString prepath);
 +
      /**

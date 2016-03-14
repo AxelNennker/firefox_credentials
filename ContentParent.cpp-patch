@@ -21,7 +21,7 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  #include "nsSystemInfo.h"
  #endif
  
-@@ -2937,16 +2940,71 @@ ContentParent::RecvAudioChannelServiceSt
+@@ -2951,16 +2954,71 @@ ContentParent::RecvAudioChannelServiceSt
    MOZ_ASSERT(service);
  
    service->ChildStatusReceived(mChildID, aTelephonyChannel,
