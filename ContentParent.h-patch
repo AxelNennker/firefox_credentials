@@ -10,8 +10,8 @@ diff --git a/dom/ipc/ContentParent.h b/dom/ipc/ContentParent.h
    static bool AllocateLayerTreeId(TabParent* aTabParent, uint64_t* aId);
  
  protected:
-+  virtual bool RecvFindLogins(const uint64_t& getterId, const nsString& prepath) override;
-+  virtual bool RecvStoreLogin(const uint64_t& getterId,
++  virtual bool RecvFindLogins(const uintptr_t& getterId, const nsString& prepath) override;
++  virtual bool RecvStoreLogin(const uintptr_t& getterId,
 +      const nsString& aHostname,
 +      const nsString& aUsername,
 +      const nsString& aPassword,

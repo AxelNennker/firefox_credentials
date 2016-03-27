@@ -30,7 +30,7 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  }
  
  bool
-+ContentParent::RecvStoreLogin(const uint64_t& aGetterId,
++ContentParent::RecvStoreLogin(const uintptr_t& aGetterId,
 +    const nsString& aHostname,
 +    const nsString& aUsername,
 +    const nsString& aPassword,
