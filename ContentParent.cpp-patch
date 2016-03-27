@@ -21,7 +21,7 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  #include "nsSystemInfo.h"
  #endif
  
-@@ -2951,16 +2954,71 @@ ContentParent::RecvAudioChannelServiceSt
+@@ -2951,16 +2954,72 @@ ContentParent::RecvAudioChannelServiceSt
    MOZ_ASSERT(service);
  
    service->ChildStatusReceived(mChildID, aTelephonyChannel,
@@ -30,6 +30,29 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
  }
  
  bool
++ContentParent::RecvStoreLogin(const uint64_t& aGetterId,
++    const nsString& aHostname,
++    const nsString& aUsername,
++    const nsString& aPassword,
++    const nsString& aUsernameField,
++    const nsString& aPasswordField)
++{
++  nsCOMPtr<nsILoginManager> loginmanager = do_GetService("@mozilla.org/login-manager;1");
++
++  nsAutoString formSubmitURL;
++  formSubmitURL.AssignLiteral("");
++  nsAutoString httpRealm;
++  httpRealm.AssignLiteral("");
++
++  enum nsresult rv;
++  nsCOMPtr<nsILoginInfo> loginInfoInstance = do_CreateInstance("@mozilla.org/login-manager/loginInfo;1", &rv);
++  // FIXME find macro to throw if rv is error
++  loginInfoInstance->Init(aHostname, formSubmitURL, httpRealm, aUsername, aPassword, aUsernameField, aPasswordField);
++  loginmanager->AddLogin(loginInfoInstance);
++  return true;
++}
++
++bool
 +ContentParent::RecvFindLogins(const uint64_t& aGetterId, const nsString& aPrepath)
 +{
 +  nsCOMPtr<nsILoginManager> loginmanager = do_GetService("@mozilla.org/login-manager;1");
@@ -44,42 +67,20 @@ diff --git a/dom/ipc/ContentParent.cpp b/dom/ipc/ContentParent.cpp
 +  nsAutoString password;
 +  nsAutoString username;
 +
-+#ifdef AXEL_GETALLLOGINS
-+  loginmanager->GetAllLogins(&count, &loginInfos);
-+  if (count > 0 && loginInfos != nullptr) {
++  loginmanager->FindLogins(&count, aPrepath, actionUrl, httpRealm, &loginInfos);
++  if ((count > 0) && (loginInfos != nullptr)) {
 +    nsILoginInfo* loginInfo = loginInfos[0];
-+    if (loginInfos != nullptr) {
-+      nsILoginInfo* loginInfo = loginInfos[0];
-+      if (loginInfo) {
-+        loginInfo->GetUsername(username);
-+        loginInfo->GetPassword(password);
-+      } else {
-+        username.AssignLiteral("u1");
-+        password.AssignLiteral("p1");
-+      }
++    if (loginInfo) {
++      loginInfo->GetUsername(username);
++      loginInfo->GetPassword(password);
 +    } else {
-+      username.AssignLiteral("u2");
-+      password.AssignLiteral("p2");
++      username.AssignLiteral("u3");
++      password.AssignLiteral("p3");
 +    }
 +  } else {
-+#endif
-+    loginmanager->FindLogins(&count, aPrepath, actionUrl, httpRealm, &loginInfos);
-+    if ((count > 0) && (loginInfos != nullptr)) {
-+      nsILoginInfo* loginInfo = loginInfos[0];
-+      if (loginInfo) {
-+        loginInfo->GetUsername(username);
-+        loginInfo->GetPassword(password);
-+      } else {
-+        username.AssignLiteral("u3");
-+        password.AssignLiteral("p3");
-+      }
-+    } else {
-+      username.AssignLiteral("");
-+      password.AssignLiteral("");
-+    }
-+#ifdef AXEL_GETALLLOGINS
++    username.AssignLiteral("");
++    password.AssignLiteral("");
 +  }
-+#endif
 +  Unused << SendLoginsForPath(aGetterId, aPrepath, username, password);
 +  return true;
 +}

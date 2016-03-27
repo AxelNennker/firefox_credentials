@@ -104,14 +104,44 @@ CredentialContainer::Get(
 
 already_AddRefed<Promise> 
 CredentialContainer::Store(Credential& credential) {
-  ErrorResult result;
-  nsCOMPtr<nsIGlobalObject> go = credential.GetParentObject();
-  RefPtr<Promise> p = Promise::Create(go, result);
-  if (result.Failed()) {
+  MOZ_ASSERT(NS_IsMainThread(), "Called on the wrong thread");
+  if (XRE_GetProcessType() != GeckoProcessType_Default) {
+    ErrorResult result;
+    nsCOMPtr<nsIGlobalObject> go = do_QueryInterface(mWindow);
+    RefPtr<Promise> p = Promise::Create(go, result);
+    if (result.Failed()) {
+      return nullptr;
+    }
+
+    nsIDOMLocation* location = mWindow->GetLocation();
+    if (location) {
+      // FIXME check secure transport
+      nsAutoString origin;
+      location->GetOrigin(origin);
+      ContentChild* cc = ContentChild::GetSingleton();
+      RefPtr<Promise> ipcRef(p);
+
+      nsString credentialType;
+      credential.GetType(credentialType);
+      if (credentialType.EqualsLiteral("password")) {
+        PasswordCredential* pc = static_cast<PasswordCredential*>(&credential);
+        nsString username, password, usernameField, passwordField;
+        pc->GetId(username);
+        pc->GetPassword(password);
+        pc->GetIdName(usernameField);
+        pc->GetPasswordName(passwordField);
+        cc->SendStoreLogin(reinterpret_cast<uint64_t>(ipcRef.forget().take()),
+            origin, username, password, usernameField, passwordField);
+      } else {
+        return nullptr;
+      }
+    } else {
+      return nullptr;
+    }
+    return p.forget();
+  } else {
     return nullptr;
   }
-  // FIXME not implemennted
-  return p.forget();
 }
 
 // Return a raw pointer here to avoid refcounting, but make sure it's safe (the object should be kept alive by the callee).

@@ -39,6 +39,8 @@ namespace dom {
 
 class PasswordCredential final : public SiteBoundCredential
 {
+  friend CredentialContainer;
+
   Nullable<FormDataOrURLSearchParams> mAdditionalData;
 
 public:

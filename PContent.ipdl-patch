@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/PContent.ipdl b/dom/ipc/PContent.ipdl
 --- a/dom/ipc/PContent.ipdl
 +++ b/dom/ipc/PContent.ipdl
-@@ -744,17 +744,22 @@ child:
+@@ -744,17 +744,28 @@ child:
  
      /**
       * Windows specific: associate this content process with the browsers
@@ -16,6 +16,12 @@ diff --git a/dom/ipc/PContent.ipdl b/dom/ipc/PContent.ipdl
 +
 + parent:
 +    async FindLogins(uint64_t getterId, nsString prepath);
++    async StoreLogin(uint64_t getterId, 
++      nsString aHostname,
++      nsString aUsername,
++      nsString aPassword,
++      nsString aUsernameField,
++      nsString aPasswordField);
 +
      /**
       * Tell the content process some attributes of itself.  This is

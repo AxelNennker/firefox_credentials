@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/ContentParent.h b/dom/ipc/ContentParent.h
 --- a/dom/ipc/ContentParent.h
 +++ b/dom/ipc/ContentParent.h
-@@ -509,16 +509,18 @@ public:
+@@ -509,16 +509,24 @@ public:
                                  nsresult* aResult,
                                  bool* aWindowIsNew,
                                  InfallibleTArray<FrameScriptInfo>* aFrameScripts,
@@ -11,6 +11,12 @@ diff --git a/dom/ipc/ContentParent.h b/dom/ipc/ContentParent.h
  
  protected:
 +  virtual bool RecvFindLogins(const uint64_t& getterId, const nsString& prepath) override;
++  virtual bool RecvStoreLogin(const uint64_t& getterId,
++      const nsString& aHostname,
++      const nsString& aUsername,
++      const nsString& aPassword,
++      const nsString& aUsernameField,
++      const nsString& aPasswordField) override;
 +
    void OnChannelConnected(int32_t pid) override;
  

@@ -1,7 +1,7 @@
 diff --git a/dom/ipc/ContentChild.h b/dom/ipc/ContentChild.h
 --- a/dom/ipc/ContentChild.h
 +++ b/dom/ipc/ContentChild.h
-@@ -404,16 +404,23 @@ public:
+@@ -404,16 +404,21 @@ public:
  
    virtual bool RecvBidiKeyboardNotify(const bool& isLangRTL) override;
  
@@ -15,8 +15,6 @@ diff --git a/dom/ipc/ContentChild.h b/dom/ipc/ContentChild.h
 +                                 const nsString& aUsername,
 +                                 const nsString& aPassword) override;
 +
-+  //void SendFindLogins(const uint64_t& aGetterId, const nsString& aPrepath);
-+  
    virtual bool RecvSystemMemoryAvailable(const uint64_t& aGetterId,
                                           const uint32_t& aMemoryAvailable) override;
  
